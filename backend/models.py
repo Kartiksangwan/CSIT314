@@ -49,7 +49,6 @@ class Candidate(db.Model):
 
     bookmarks = db.relationship('Bookmark', backref='candidate', lazy=True)
     applications = db.relationship('Application', backref='candidate', lazy=True)
-    sent_messages = db.relationship('Message', foreign_keys='Message.sender_user_id', backref='sender', lazy=True)
 
     def to_dict(self):
         return {
