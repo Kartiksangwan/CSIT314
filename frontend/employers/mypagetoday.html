@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Today's Recommendation</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f2f2f2;
+      padding:8px;
+      color:#000;
+    }
+
+    .page-title{
+      width:630px;
+      margin:0 auto 6px;
+      color:#b5b5b5;
+      font-size:12px;
+    }
+
+    .page{
+      width:630px;
+      min-height:465px;
+      margin:auto;
+      background:#f7fbff;
+    }
+
+    .navbar{
+      height:58px;
+      background:#fff;
+      border:1px solid #79c5ff;
+      display:flex;
+      align-items:flex-end;
+      padding:0 16px;
+    }
+
+    .logo{
+      width:100px;
+      height:48px;
+      display:flex;
+      align-items:center;
+      margin-right:auto;
+    }
+
+    .logo svg{
+      width:90px;
+      height:42px;
+    }
+
+    .nav-btn{
+      width:96px;
+      height:29px;
+      background:white;
+      border:1px solid #79c5ff;
+      border-bottom:none;
+      border-radius:5px 5px 0 0;
+      margin-left:16px;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .profile{
+      width:25px;
+      height:45px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding-top:13px;
+      margin-left:12px;
+    }
+
+    .profile svg{
+      width:18px;
+      height:18px;
+    }
+
+    .content{
+      padding:32px 26px 20px;
+    }
+
+    .section-title{
+      font-size:16px;
+      font-weight:bold;
+      margin-bottom:22px;
+    }
+
+    .recommend-row{
+      display:grid;
+      grid-template-columns:20px 70px 180px 245px 25px;
+      column-gap:14px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+
+    .number{
+      font-size:16px;
+      font-weight:bold;
+      align-self:start;
+      padding-top:4px;
+    }
+
+    .image-box{
+      width:65px;
+      height:56px;
+      background:#d9d9d9;
+      position:relative;
+    }
+
+    .image-box::before,
+    .image-box::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+      linear-gradient(
+        to bottom right,
+        transparent 49.5%,
+        #555 50%,
+        transparent 50.5%
+      );
+    }
+
+    .image-box::after{
+      background:
+      linear-gradient(
+        to top right,
+        transparent 49.5%,
+        #555 50%,
+        transparent 50.5%
+      );
+    }
+
+    .match{
+      font-size:14px;
+      text-align:center;
+      line-height:18px;
+    }
+
+    .candidate-card{
+      border:1px solid #79c5ff;
+      background:white;
+      min-height:88px;
+      padding:4px 5px;
+      font-size:12px;
+      line-height:14px;
+    }
+
+    .candidate-card strong{
+      font-size:13px;
+    }
+
+    .bookmark{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .bookmark svg{
+      width:18px;
+      height:22px;
+    }
+
+    hr{
+      border:none;
+      border-top:1px solid #999;
+      margin:8px 0 6px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="page-title">
+    My page (Today's Recommendation)★
+  </div>
+
+  <main class="page">
+
+    <nav class="navbar">
+
+      <div class="logo">
+
+        <svg viewBox="0 0 120 55"
+        xmlns="http://www.w3.org/2000/svg">
+
+          <path
+          d="M25 37 C35 22, 24 15, 17 22
+          C10 29, 16 40, 30 38
+          C42 36, 48 23, 58 19"
+          fill="none"
+          stroke="#0059d9"
+          stroke-width="9"
+          stroke-linecap="round"/>
+
+          <path
+          d="M54 34
+          C72 30, 82 17, 84 5
+          C75 18, 62 14, 59 28 Z"
+          fill="#18a9f5"/>
+
+          <circle
+          cx="24"
+          cy="14"
+          r="8"
+          fill="#0059d9"/>
+
+        </svg>
+
+      </div>
+
+      <button class="nav-btn">Applicant</button>
+      <button class="nav-btn">Bookmark</button>
+      <button class="nav-btn">Message</button>
+
+      <div class="profile">
+
+        <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="black"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+
+        </svg>
+
+      </div>
+
+    </nav>
+
+    <section class="content">
+
+      <div class="section-title">
+        Today’s Recommendation
+      </div>
+
+      <!-- ROW 1 -->
+
+      <div class="recommend-row">
+
+        <div class="number">1</div>
+
+        <div class="image-box"></div>
+
+        <div class="match">
+          Match: 85%<br>
+          Matched Keywords:<br>
+          #JavaScript #HTML/CSS<br>
+          #UI/UX #ResponsiveDesign
+        </div>
+
+        <div class="candidate-card">
+
+          <strong>Aiden Brooks</strong><br>
+
+          Frontend Web Developer<br>
+          JavaScript<br>
+          HTML/CSS<br>
+          Responsive UI Design<br>
+          2 years experience<br>
+          Brisbane, QLD
+
+        </div>
+
+        <div class="bookmark">
+
+          <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          stroke-width="2">
+
+            <path d="M6 3h12v18l-6-4-6 4V3z"/>
+
+          </svg>
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <!-- ROW 2 -->
+
+      <div class="recommend-row">
+
+        <div class="number">2</div>
+
+        <div class="image-box"></div>
+
+        <div class="match">
+          Match: 78%<br>
+          Matched Keywords:<br>
+          #Git #Frontend<br>
+          #Communication
+        </div>
+
+        <div class="candidate-card">
+
+          <strong>Chloe Nguyen</strong><br>
+
+          Junior Frontend Developer<br>
+          Git/GitHub<br>
+          Frontend Development<br>
+          Communication Skills<br>
+          Team Collaboration<br>
+          Remote Available
+
+        </div>
+
+        <div class="bookmark">
+
+          <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          stroke-width="2">
+
+            <path d="M6 3h12v18l-6-4-6 4V3z"/>
+
+          </svg>
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <!-- ROW 3 -->
+
+      <div class="recommend-row">
+
+        <div class="number">3</div>
+
+        <div class="image-box"></div>
+
+        <div class="match">
+          Match: 68%<br>
+          Matched Keywords:<br>
+          #UI/UX #JavaScript<br>
+          #ProblemSolving
+        </div>
+
+        <div class="candidate-card">
+
+          <strong>Ethan Walker</strong><br>
+
+          Graduate Web Developer<br>
+          UI/UX Design<br>
+          JavaScript<br>
+          Problem Solving<br>
+          Agile Team Experience<br>
+          Entry Level
+
+        </div>
+
+        <div class="bookmark">
+
+          <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          stroke-width="2">
+
+            <path d="M6 3h12v18l-6-4-6 4V3z"/>
+
+          </svg>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

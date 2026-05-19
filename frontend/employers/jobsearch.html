@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Search</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f2f2f2;
+      padding:20px;
+    }
+
+    .title{
+      color:#b3b3b3;
+      font-size:14px;
+      margin-bottom:5px;
+    }
+
+    .container{
+      width:700px;
+      margin:auto;
+      background:#f7fbff;
+      min-height:480px;
+    }
+
+    .navbar{
+      height:65px;
+      border:1px solid #7cc9ff;
+      background:white;
+      display:flex;
+      align-items:flex-end;
+      padding:0 20px;
+    }
+
+    .logo{
+      width:80px;
+      height:40px;
+      background:#1e88ff;
+      border-radius:5px;
+      margin-right:auto;
+    }
+
+    .nav-btn{
+      width:110px;
+      height:32px;
+      border:1px solid #7cc9ff;
+      background:white;
+      margin-left:15px;
+      border-radius:5px 5px 0 0;
+      font-size:16px;
+    }
+
+    .main{
+      display:flex;
+      justify-content:space-between;
+      padding:50px 20px;
+    }
+
+    .left{
+      width:180px;
+    }
+
+    .keyword-box{
+      width:160px;
+      height:32px;
+      border:1px solid #7cc9ff;
+      background:white;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 10px;
+      margin-bottom:10px;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .filter-box{
+      width:160px;
+      border:1px solid #7cc9ff;
+      background:white;
+    }
+
+    .filter-item{
+      height:28px;
+      border-bottom:1px solid #7cc9ff;
+      display:flex;
+      align-items:center;
+      padding-left:8px;
+      font-size:14px;
+    }
+
+    .filter-item:last-child{
+      border-bottom:none;
+    }
+
+    .image-box{
+      width:120px;
+      height:90px;
+      background:#ddd;
+      margin:40px auto 0;
+      position:relative;
+    }
+
+    .image-box::before,
+    .image-box::after{
+      content:"";
+      position:absolute;
+      width:100%;
+      height:1px;
+      background:#333;
+      top:50%;
+      left:0;
+    }
+
+    .image-box::before{
+      transform:rotate(37deg);
+    }
+
+    .image-box::after{
+      transform:rotate(-37deg);
+    }
+
+    .right{
+      width:360px;
+    }
+
+    .search-btn{
+      width:95px;
+      height:28px;
+      background:#b2ebf2;
+      border:none;
+      font-weight:bold;
+      margin-left:auto;
+      display:block;
+      margin-bottom:28px;
+    }
+
+    .candidate-box{
+      width:220px;
+      min-height:110px;
+      border:1px solid #7cc9ff;
+      background:white;
+      padding:8px;
+      font-size:12px;
+      margin-bottom:50px;
+    }
+
+    .candidate-name{
+      font-weight:bold;
+      margin-bottom:3px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="title">
+  Job Search (Search by Keyword ) ★
+</div>
+
+<div class="container">
+
+  <div class="navbar">
+    <div class="logo"></div>
+
+    <button class="nav-btn">Applicant</button>
+    <button class="nav-btn">Bookmark</button>
+    <button class="nav-btn">Message</button>
+  </div>
+
+  <div class="main">
+
+    <div class="left">
+
+      <div class="keyword-box">
+        Keyword 🔍
+      </div>
+
+      <div class="filter-box">
+
+        <div class="filter-item">🔍 UI/UX</div>
+        <div class="filter-item">🔍 Experienced</div>
+        <div class="filter-item">🔍 1-2 years</div>
+        <div class="filter-item">🔍 Brisbane</div>
+        <div class="filter-item">🔍 Remote</div>
+
+      </div>
+
+      <div class="image-box"></div>
+
+    </div>
+
+    <div class="right">
+
+      <button class="search-btn">
+        Search
+      </button>
+
+      <div class="candidate-box">
+        <div class="candidate-name">
+          Emma Johnson
+        </div>
+
+        Junior UI/UX Designer
+        <br><br>
+
+        UI/UX Design
+        <br>
+        Figma & Prototyping
+        <br>
+        Team Collaboration
+        <br>
+        1.5 years experience
+        <br>
+        Brisbane, QLD
+        <br>
+        Interested in Hybrid Work
+      </div>
+
+      <div class="candidate-box">
+        <div class="candidate-name">
+          Daniel Kim
+        </div>
+
+        Graduate Mobile Developer
+        <br><br>
+
+        Java & Android
+        <br>
+        Firebase
+        <br>
+        API Integration
+        <br>
+        Team Project Experience
+        <br>
+        Remote Available
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

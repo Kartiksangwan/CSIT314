@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Page</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f2f2f2;
+      padding:20px;
+    }
+
+    .page-title{
+      width:700px;
+      margin:auto;
+      color:#b5b5b5;
+      font-size:14px;
+      margin-bottom:5px;
+    }
+
+    .container{
+      width:700px;
+      height:455px;
+      background:#f7fbff;
+      margin:auto;
+    }
+
+    .navbar{
+      height:60px;
+      border:1px solid #7cc9ff;
+      background:white;
+      display:flex;
+      align-items:flex-end;
+      padding:0 20px;
+    }
+
+    .logo{
+      width:100px;
+      height:50px;
+      display:flex;
+      align-items:center;
+      margin-right:auto;
+    }
+
+    .logo svg{
+      width:95px;
+      height:45px;
+    }
+
+    .nav-btn{
+      width:100px;
+      height:32px;
+      border:1px solid #7cc9ff;
+      background:white;
+      border-radius:5px 5px 0 0;
+      margin-left:15px;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .profile{
+      margin-left:18px;
+      margin-bottom:25px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .profile svg{
+      width:20px;
+      height:20px;
+    }
+
+    .content{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      margin-top:115px;
+      gap:48px;
+    }
+
+    .main-btn{
+      background:#b2ebf2;
+      border:none;
+      font-size:16px;
+      font-weight:bold;
+      padding:12px 22px;
+      cursor:pointer;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="page-title">
+    My Page
+  </div>
+
+  <div class="container">
+
+    <div class="navbar">
+
+      <div class="logo">
+
+        <svg viewBox="0 0 120 55" xmlns="http://www.w3.org/2000/svg">
+
+          <path
+            d="M25 37 C35 22, 24 15, 17 22 C10 29, 16 40, 30 38 C42 36, 48 23, 58 19"
+            fill="none"
+            stroke="#0059d9"
+            stroke-width="9"
+            stroke-linecap="round"/>
+
+          <path
+            d="M54 34 C72 30, 82 17, 84 5
+            C75 18, 62 14, 59 28 Z"
+            fill="#18a9f5"/>
+
+          <circle
+            cx="24"
+            cy="14"
+            r="8"
+            fill="#0059d9"/>
+
+        </svg>
+
+      </div>
+
+      <button class="nav-btn">
+        Applicant
+      </button>
+
+      <button class="nav-btn">
+        Bookmark
+      </button>
+
+      <button class="nav-btn">
+        Message
+      </button>
+
+      <div class="profile">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+
+        </svg>
+
+      </div>
+
+    </div>
+
+    <div class="content">
+
+      <button class="main-btn">
+        Company View
+      </button>
+
+      <button class="main-btn">
+        Change Email and Password
+      </button>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

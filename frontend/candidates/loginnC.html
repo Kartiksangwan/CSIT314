@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black">
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm min-h-[600px] flex flex-col justify-between">
+    <div class="w-full">
+      <h1 class="text-3xl font-medium text-gray-400 mb-4">Welcome Page (Login) <span class="text-2xl">★</span></h1>
+      <header class="border border-blue-200 p-3 mb-16 flex items-center justify-between">
+        <svg width="120" height="45" viewBox="0 0 120 45" fill="none"><path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/><path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/><path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/></svg>
+        <a href="signup1C.html" class="pr-6 font-bold text-lg text-blue-600 hover:underline">Sign Up</a>
+      </header>
+      <div class="text-center space-y-6 max-w-[500px] mx-auto">
+        <h2 class="text-2xl font-bold">Login</h2>
+        <div id="err" class="text-red-600 font-semibold text-sm hidden"></div>
+        <form onsubmit="doLogin(event)" class="space-y-6 pt-4">
+          <div class="grid grid-cols-12 gap-4 items-center">
+            <label class="col-span-5 text-right font-bold text-[15px] pr-8">Email</label>
+            <div class="col-span-7"><input type="email" id="email" required class="w-[220px] h-[45px] border border-blue-300 px-3 text-sm"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 items-center">
+            <label class="col-span-5 text-right font-bold text-[15px] pr-8">Password</label>
+            <div class="col-span-7"><input type="password" id="password" required class="w-[220px] h-[45px] border border-blue-300 px-3 text-sm"></div>
+          </div>
+          <div class="flex justify-center pt-4">
+            <button type="submit" id="btn" class="bg-[#b2dfdb] border border-gray-400 px-10 py-2 font-bold hover:bg-[#99ceca] transition">Login</button>
+          </div>
+        </form>
+        <p class="text-sm text-gray-500">No account? <a href="signup1C.html" class="text-blue-600 font-bold">Sign Up</a></p>
+        <p class="text-sm text-gray-500">Employer? <a href="../employers/companylogin.html" class="text-blue-600 font-bold">Employer Login</a></p>
+      </div>
+    </div>
+  </div>
+  <script>
+    async function doLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn');
+      const err = document.getElementById('err');
+      btn.textContent = 'Logging in...'; btn.disabled = true;
+      const res = await login(document.getElementById('email').value, document.getElementById('password').value);
+      if (res.error) {
+        err.textContent = res.error; err.classList.remove('hidden');
+        btn.textContent = 'Login'; btn.disabled = false;
+      } else {
+        saveSession(res.user);
+        window.location.href = 'mypageC.html';
+      }
+    }
+  </script>
+</body>
+</html>

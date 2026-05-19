@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Page (Signin) - Upload Wireframe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm min-h-[600px] flex flex-col justify-between">
+    
+    <div class="w-full">
+      <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+        Welcome Page (Signin) <span class="text-2xl">★</span>
+      </h1>
+
+      <header class="border border-blue-200 p-3 mb-16 flex items-center justify-between">
+        <div class="flex items-center">
+          <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+            <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+            <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </header>
+
+      <div class="max-w-[600px] mx-auto space-y-10 pt-4">
+        
+        <div class="grid grid-cols-12 gap-4 items-start">
+          <div class="col-span-5 text-right pt-2">
+            <span class="font-bold text-[16px] pr-8 text-black">Upload Resume</span>
+          </div>
+          <div class="col-span-7 flex justify-start">
+            <input type="file" id="resume-input" class="hidden" onchange="handleResumeChange(this)">
+            <label for="resume-input" class="w-[280px] h-[180px] border border-blue-300 bg-white flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition p-4 text-center">
+              <div id="resume-default-view" class="flex flex-col items-center justify-center">
+                <svg width="60" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="text-black">
+                  <path d="M12 12v9m0-9l-3 3m3-3l3 3"></path>
+                  <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+                </svg>
+              </div>
+              <div id="resume-file-name" class="hidden text-sm font-semibold text-blue-600 break-all"></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 items-start">
+          <div class="col-span-5 text-right pt-2">
+            <span class="font-bold text-[16px] pr-8 text-black">Upload Your Picture</span>
+          </div>
+          <div class="col-span-7 flex justify-start">
+            <input type="file" id="picture-input" accept="image/*" class="hidden" onchange="handlePictureChange(this)">
+            <label for="picture-input" class="w-[200px] h-[130px] bg-[#dddddd] border border-gray-500 relative cursor-pointer overflow-hidden block">
+              <svg id="wireframe-crosslines" class="absolute inset-0 w-full h-full stroke-gray-600 stroke-[1]" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <line x1="0" y1="0" x2="100%" y2="100%" />
+                <line x1="100%" y1="0" x2="0" y2="100%" />
+              </svg>
+              <img id="picture-preview" class="w-full h-full object-cover hidden absolute inset-0" alt="Preview">
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div></div>
+
+  </div>
+
+  <script>
+    // Handles text changes for the Resume slot
+    function handleResumeChange(input) {
+      const fileNameDiv = document.getElementById('resume-file-name');
+      const defaultView = document.getElementById('resume-default-view');
+      
+      if (input.files && input.files[0]) {
+        defaultView.classList.add('hidden');
+        fileNameDiv.innerText = "📄 " + input.files[0].name;
+        fileNameDiv.classList.remove('hidden');
+      }
+    }
+
+    // Handles generating a dynamic visual preview for the Picture slot
+    function handlePictureChange(input) {
+      const previewImg = document.getElementById('picture-preview');
+      const crosslines = document.getElementById('wireframe-crosslines');
+
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          crosslines.classList.add('hidden'); // Hide the wireframe X
+          previewImg.src = e.target.result;  // Inject the raw target stream src
+          previewImg.classList.remove('hidden'); // Show the image tag
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search with Keyword from Resume Wireframe Match</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm">
+    
+    <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+      Search with Keyword from Resume<span class="text-2xl">★</span>
+    </h1>
+
+    <header class="border border-blue-200 p-3 mb-10 flex items-center justify-between">
+      <div class="flex items-center">
+        <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+          <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+          <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="flex -space-x-px mr-4">
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Offer</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Bookmark</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Message</button>
+      </div>
+
+      <div class="pr-2 cursor-pointer hover:text-blue-600 transition">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-12 gap-6 items-start mb-8">
+      <div class="col-span-4">
+        <div class="w-full bg-[#b2dfdb] border border-gray-400 p-2 text-sm font-bold flex justify-between items-center h-[42px] px-3">
+          <span>Job Title, Keyword</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+      </div>
+
+      <div class="col-span-4">
+        <div class="w-full bg-[#b2dfdb] border border-gray-400 p-2 text-sm font-bold flex justify-between items-center h-[42px] px-3">
+          <span>Location</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        </div>
+      </div>
+
+      <div class="col-span-4">
+        <div class="w-full bg-[#b2dfdb] border border-gray-400 p-2 text-sm font-bold h-[42px] flex items-center px-4">
+          <span>Work Mode</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="text-[18px] font-bold text-black mb-4 pl-2">Keywords from your job description</h2>
+
+    <div class="border border-blue-300 p-8 bg-white mb-10 max-w-[650px] mx-auto min-h-[320px] flex items-center">
+      <div class="grid grid-cols-3 gap-y-6 gap-x-12 w-full">
+        
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" checked class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>Java</span>
+        </label>
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" checked class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>SQL</span>
+        </label>
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" checked class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>UI/CX</span>
+        </label>
+
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" checked class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>API</span>
+        </label>
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>Testing</span>
+        </label>
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>Git</span>
+        </label>
+
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>Communication</span>
+        </label>
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>Problem Solving</span>
+        </label>
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>Leadership</span>
+        </label>
+
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span class="leading-tight block">Time<br>Management</span>
+        </label>
+        <label class="flex items-start space-x-2 font-medium text-[15px] text-black cursor-pointer select-none">
+          <input type="checkbox" class="mt-1 w-3.5 h-3.5 border border-black accent-black rounded-none">
+          <span>Adaptability</span>
+        </label>
+        <div></div> </div>
+    </div>
+
+    <div class="flex justify-center">
+      <button onclick="handleSearchSubmit()" class="bg-[#b2dfdb] border border-gray-400 px-12 py-1.5 font-bold text-sm tracking-wide shadow-sm hover:bg-[#99ceca] active:bg-[#7bc2bc] transition">
+        Search
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // Tab Highlighting Controller Action
+    function switchTab(selectedButton) {
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-gray-100', 'text-blue-600', 'border-gray-400');
+        btn.classList.add('bg-white', 'text-black', 'border-gray-300');
+      });
+
+      selectedButton.classList.remove('bg-white', 'text-black', 'border-gray-300');
+      selectedButton.classList.add('bg-gray-100', 'text-blue-600', 'border-gray-400');
+    }
+
+    // Submit button event listener pipeline execution
+    function handleSearchSubmit() {
+      // Gather checked state parameters dynamically
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      let checkedList = [];
+      checkboxes.forEach(box => {
+        const text = box.closest('label').textContent.replace(/\s+/g, ' ').trim();
+        checkedList.push(text);
+      });
+
+      alert("Search Query Initiated!\n\nFiltering resume indexes for filters: " + (checkedList.join(", ") || "None"));
+    }
+  </script>
+
+</body>
+</html>

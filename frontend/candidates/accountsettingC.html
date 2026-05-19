@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black">
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm">
+    <h1 class="text-3xl font-medium text-gray-400 mb-4">My page (Account Setting) <span class="text-2xl">★</span></h1>
+    <header class="border border-blue-200 p-3 mb-10 flex items-center justify-between">
+      <svg width="120" height="45" viewBox="0 0 120 45" fill="none"><path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/><path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/><path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="flex -space-x-px mr-4">
+        <button onclick="window.location.href='offerpageC.html'" class="px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Offer</button>
+        <button onclick="window.location.href='bookmarkC.html'" class="px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Bookmark</button>
+        <button onclick="window.location.href='massageC.html'" class="px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Message</button>
+      </div>
+      <button onclick="window.location.href='mypageC.html'" class="pr-2 text-sm text-blue-600 font-bold">My Page</button>
+    </header>
+
+    <div class="max-w-[700px] mx-auto py-2">
+      <h2 class="text-[16px] font-bold pl-24 mb-6">Edit Profile</h2>
+      <div id="success-msg" class="text-green-600 font-semibold text-sm mb-4 hidden text-center"></div>
+      <div id="error-msg" class="text-red-600 font-semibold text-sm mb-4 hidden text-center"></div>
+
+      <form onsubmit="saveProfile(event)" class="space-y-5">
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <label class="col-span-4 text-right font-bold text-[15px] pr-8">Full Name</label>
+          <div class="col-span-8"><input type="text" id="full_name" class="w-[300px] h-[36px] border border-blue-300 px-3 text-[14px]"></div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <label class="col-span-4 text-right font-bold text-[15px] pr-8">Job Title</label>
+          <div class="col-span-8"><input type="text" id="job_title" class="w-[300px] h-[36px] border border-blue-300 px-3 text-[14px]"></div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 items-start">
+          <label class="col-span-4 text-right font-bold text-[15px] pr-8 pt-2">Work Experience / Bio</label>
+          <div class="col-span-8"><textarea id="bio" rows="3" class="w-[390px] border border-blue-300 p-2 text-[14px] resize-none"></textarea></div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 items-start">
+          <label class="col-span-4 text-right font-bold text-[15px] pr-8 pt-2">Skills</label>
+          <div class="col-span-8">
+            <textarea id="skills" rows="2" class="w-[390px] border border-blue-300 p-2 text-[14px] resize-none"></textarea>
+            <p class="text-xs text-gray-500 mt-1">Comma separated e.g. Python, SQL, Git</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <label class="col-span-4 text-right font-bold text-[15px] pr-8">Education</label>
+          <div class="col-span-8"><input type="text" id="education" class="w-[300px] h-[36px] border border-blue-300 px-3 text-[14px]"></div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <label class="col-span-4 text-right font-bold text-[15px] pr-8">Experience Years</label>
+          <div class="col-span-8"><input type="text" id="experience_years" placeholder="e.g. 1-2 years" class="w-[300px] h-[36px] border border-blue-300 px-3 text-[14px]"></div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <label class="col-span-4 text-right font-bold text-[15px] pr-8">Location</label>
+          <div class="col-span-8"><input type="text" id="location" placeholder="e.g. Brisbane, QLD" class="w-[300px] h-[36px] border border-blue-300 px-3 text-[14px]"></div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <label class="col-span-4 text-right font-bold text-[15px] pr-8">Work Mode</label>
+          <div class="col-span-8">
+            <select id="work_mode" class="w-[200px] h-[36px] border border-blue-300 px-3 text-[14px]">
+              <option value="">Select...</option>
+              <option value="Remote">Remote</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="On-site">On-site</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-center pt-4">
+          <button type="submit" id="save-btn" class="bg-[#b2dfdb] border border-gray-400 px-10 py-2 font-bold hover:bg-[#99ceca] transition">Save Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    async function loadProfile() {
+      if (!requireLogin('candidate')) return;
+      const res = await getCandidateProfile();
+      if (res.candidate) {
+        const c = res.candidate;
+        document.getElementById('full_name').value = c.full_name || '';
+        document.getElementById('job_title').value = c.job_title || '';
+        document.getElementById('bio').value = c.bio || '';
+        document.getElementById('skills').value = c.skills || '';
+        document.getElementById('education').value = c.education || '';
+        document.getElementById('experience_years').value = c.experience_years || '';
+        document.getElementById('location').value = c.location || '';
+        document.getElementById('work_mode').value = c.work_mode || '';
+      }
+    }
+
+    async function saveProfile(e) {
+      e.preventDefault();
+      const btn = document.getElementById('save-btn');
+      const success = document.getElementById('success-msg');
+      const err = document.getElementById('error-msg');
+      btn.textContent = 'Saving...'; btn.disabled = true;
+
+      const res = await updateCandidateProfile({
+        full_name: document.getElementById('full_name').value,
+        job_title: document.getElementById('job_title').value,
+        bio: document.getElementById('bio').value,
+        skills: document.getElementById('skills').value,
+        education: document.getElementById('education').value,
+        experience_years: document.getElementById('experience_years').value,
+        location: document.getElementById('location').value,
+        work_mode: document.getElementById('work_mode').value
+      });
+
+      btn.textContent = 'Save Profile'; btn.disabled = false;
+
+      if (res.error) {
+        err.textContent = res.error; err.classList.remove('hidden');
+      } else {
+        success.textContent = 'Profile saved successfully!';
+        success.classList.remove('hidden');
+        setTimeout(() => success.classList.add('hidden'), 3000);
+        err.classList.add('hidden');
+      }
+    }
+
+    loadProfile();
+  </script>
+</body>
+</html>

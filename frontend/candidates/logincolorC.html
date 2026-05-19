@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Page Wireframe Match</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm min-h-[600px] flex flex-col justify-between">
+    
+    <div class="w-full">
+      <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+        Welcome Page <span class="text-2xl">★</span>
+      </h1>
+
+      <header class="border border-blue-200 p-3 mb-24 flex items-center justify-between">
+        <div class="flex items-center">
+          <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+            <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+            <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="pr-6 font-bold text-lg text-black cursor-pointer hover:text-blue-600 transition">
+          Contact
+        </div>
+      </header>
+
+      <div class="text-center space-y-16 py-4">
+        
+        <h2 class="text-2xl font-bold text-black tracking-wide">Welcome!</h2>
+
+        <div class="flex flex-col items-center justify-center space-y-6">
+          
+          <button onclick="navigatePortal('candidate')" class="bg-[#b2dfdb] border border-gray-400 px-6 py-2 font-bold text-[15px] hover:bg-[#99ceca] active:bg-[#7bc2bc] transition tracking-wide shadow-sm min-w-[130px]">
+            Candidate Page
+          </button>
+
+          <div class="relative group">
+            <button onclick="navigatePortal('company')" class="bg-[#b2dfdb] border border-gray-400 px-6 py-2 font-bold text-[15px] hover:bg-[#99ceca] active:bg-[#7bc2bc] transition tracking-wide shadow-sm min-w-[130px]">
+              Company Page
+            </button>
+            <div class="absolute bottom-1.5 left-4 right-4 h-1 bg-[#1e62d0] pointer-events-none"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div></div>
+
+  </div>
+
+  <script>
+    // System navigation routing event hub
+    function navigatePortal(portalDestination) {
+      if (portalDestination === 'candidate') {
+        alert("Redirecting to Candidate Portal Hub...");
+      } else if (portalDestination === 'company') {
+        alert("Redirecting to Company Dashboard View...");
+      }
+    }
+  </script>
+
+</body>
+</html>

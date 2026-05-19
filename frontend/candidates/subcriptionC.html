@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Page Wireframe Match</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm min-h-[600px] flex flex-col justify-between">
+    
+    <div class="w-full">
+      <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+        Subscription page<span class="text-2xl">★</span>
+      </h1>
+
+      <header class="border border-blue-200 p-3 mb-16 flex items-center justify-between">
+        <div class="flex items-center">
+          <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+            <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+            <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="pr-6 font-bold text-lg text-black cursor-pointer hover:text-blue-600 transition">
+          Contact
+        </div>
+      </header>
+
+      <div class="grid grid-cols-2 max-w-[700px] mx-auto relative pt-4">
+        
+        <div class="absolute inset-y-0 left-1/2 w-px bg-gray-400 transform -translate-x-1/2"></div>
+
+        <div class="flex flex-col items-center pr-8 text-center space-y-6">
+          <h2 class="text-xl font-bold text-black tracking-wide">Free Plan</h2>
+          
+          <div class="text-xl font-bold text-black py-2">$0</div>
+          
+          <button onclick="selectPlan('Free')" class="bg-[#b2dfdb] border border-gray-400 px-10 py-1.5 font-bold text-[15px] hover:bg-[#99ceca] active:bg-[#7bc2bc] transition tracking-wide shadow-sm">
+            Start
+          </button>
+
+          <ul class="text-left font-semibold text-[15px] space-y-3 pt-4 text-black pl-4">
+            <li class="flex items-start">
+              <span class="mr-2">✔</span> View recommended jobs
+            </li>
+            <li class="flex items-start">
+              <span class="mr-2">✔</span> Apply to jobs
+            </li>
+          </ul>
+        </div>
+
+        <div class="flex flex-col items-center pl-8 text-center space-y-6">
+          <h2 class="text-xl font-bold text-black tracking-wide">Premium Plan</h2>
+          
+          <div class="text-xl font-bold text-black py-2">
+            $20<span class="text-[16px] font-normal text-black">/a month</span>
+          </div>
+          
+          <button onclick="selectPlan('Premium')" class="bg-[#b2dfdb] border border-gray-400 px-6 py-1.5 font-bold text-[15px] hover:bg-[#99ceca] active:bg-[#7bc2bc] transition tracking-wide shadow-sm">
+            Start Premium
+          </button>
+
+          <ul class="text-left font-semibold text-[15px] space-y-3 pt-4 text-black pl-4">
+            <li class="flex items-start">
+              <span class="mr-2">✔</span> View recommended jobs
+            </li>
+            <li class="flex items-start">
+              <span class="mr-2">✔</span> Apply to jobs
+            </li>
+            <li class="flex items-start">
+              <span class="mr-2">✔</span> Unlimited recommended jobs
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div></div>
+
+  </div>
+
+  <script>
+    function selectPlan(planTier) {
+      alert(`Thank you for choosing the ${planTier} Plan! Processing your setup workflow...`);
+    }
+  </script>
+
+</body>
+</html>

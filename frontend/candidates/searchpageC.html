@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Page Wireframe Match</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm">
+    
+    <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+       <span class="text-2xl"></span>
+    </h1>
+
+    <header class="border border-blue-200 p-3 mb-12 flex items-center justify-between">
+      <div class="flex items-center">
+        <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+          <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+          <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="flex -space-x-px mr-4" id="nav-tabs">
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-400 rounded-t-md text-lg bg-gray-100 text-blue-600">Offer</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Bookmark</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Message</button>
+      </div>
+
+      <div class="pr-2 cursor-pointer hover:text-blue-600 transition">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-12 gap-4 items-start mb-12">
+      <div class="col-span-3">
+        <div class="w-full bg-[#b2dfdb] border border-gray-400 px-2 flex justify-between items-center h-[42px]">
+          <input 
+            type="text" 
+            id="search-input"
+            placeholder="Job Title, Keyword" 
+            class="w-full bg-transparent placeholder-black text-black font-bold focus:outline-none text-sm"
+          >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <div class="w-full bg-[#b2dfdb] border border-gray-400 px-2 flex justify-between items-center h-[42px]">
+          <input 
+            type="text" 
+            placeholder="Location" 
+            class="w-full bg-transparent placeholder-black text-black font-bold focus:outline-none text-sm"
+          >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <div class="w-full bg-[#b2dfdb] border border-gray-400 px-3 h-[42px] flex items-center font-bold text-sm text-black">
+          <span>Work Mode</span>
+        </div>
+      </div>
+
+      <div class="col-span-3">
+        <button 
+          onclick="executeSearch()"
+          class="w-full bg-[#b2dfdb] border border-gray-400 h-[42px] flex items-center justify-center font-bold text-sm hover:bg-[#99ceca] active:bg-[#7bc2bc] transition"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+
+    <div id="results-container" class="space-y-8">
+      </div>
+
+  </div>
+
+  <script>
+    // Raw Mock Database matching your screenshot rows
+    const jobDatabase = [
+      {
+        matchScore: "85%",
+        keywords: ["#Java", "#Backend", "#SQL", "#API..."],
+        company: "Tech Solutions",
+        title: "Backend Developer",
+        desc: "Develop and maintain server-side systems for cloud-based business applications."
+      },
+      {
+        matchScore: "78%",
+        keywords: ["#Java", "#Backend", "#SQL"],
+        company: "BlueWave Systems",
+        title: "Database Engineer",
+        desc: "Design efficient databases and improve data processing performance."
+      },
+      {
+        matchScore: "72%",
+        keywords: ["#Java", "#SQL", "#UI"],
+        company: "AxisLink Technologies",
+        title: "Application Developer",
+        desc: "Create user-friendly applications and improve existing software."
+      }
+    ];
+
+    // Function to process and display results
+    function renderJobs(jobsToDisplay) {
+      const container = document.getElementById('results-container');
+      container.innerHTML = ''; // Reset frame area
+
+      if (jobsToDisplay.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-gray-400 font-bold text-lg">
+            No matching jobs found. Try "Java", "Backend", or "Developer".
+          </div>`;
+        return;
+      }
+
+      jobsToDisplay.forEach(job => {
+        const itemHtml = `
+          <div class="grid grid-cols-12 gap-8 items-center">
+            <div class="col-span-5 text-center font-bold text-black space-y-0.5">
+              <div class="text-base">Match: ${job.matchScore}</div>
+              <div class="text-base font-medium text-gray-900">Matched Keywords:</div>
+              <div class="text-sm tracking-wide font-normal text-gray-700">${job.keywords.join(' ')}</div>
+            </div>
+
+            <div class="col-span-7">
+              <div class="border border-blue-300 p-3 bg-white min-h-[105px]">
+                <h2 class="text-[15px] font-bold text-black leading-tight">${job.company}</h2>
+                <h3 class="text-[15px] font-bold text-black leading-tight">${job.title}</h3>
+                <p class="text-[14px] text-gray-900 font-normal mt-1 leading-snug">${job.desc}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        container.innerHTML += itemHtml;
+      });
+    }
+
+    // Interactive Search Logic Execution
+    function executeSearch() {
+      const query = document.getElementById('search-input').value.toLowerCase().trim();
+      
+      // If blank query field, show everything by default
+      if (query === "") {
+        renderJobs(jobDatabase);
+        return;
+      }
+
+      // Filter matches checking values inside company, job titles, or tag streams
+      const filtered = jobDatabase.filter(job => {
+        return job.title.toLowerCase().includes(query) || 
+               job.company.toLowerCase().includes(query) || 
+               job.keywords.some(tag => tag.toLowerCase().includes(query));
+      });
+
+      renderJobs(filtered);
+    }
+
+    // Navigation Tab Toggle Styling State
+    function switchTab(selectedButton) {
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-gray-100', 'text-blue-600', 'border-gray-400');
+        btn.classList.add('bg-white', 'text-black', 'border-gray-300');
+      });
+
+      // Highlight selected target block elements
+      selectedButton.classList.remove('bg-white', 'text-black', 'border-gray-300');
+      selectedButton.classList.add('bg-gray-100', 'text-blue-600', 'border-gray-400');
+    }
+
+    // Trigger Initial Render State on Window Run
+    window.onload = () => {
+      renderJobs(jobDatabase);
+      
+      // Allow user to execute searches seamlessly by hitting the 'Enter' key inside input box
+      document.getElementById('search-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          executeSearch();
+        }
+      });
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company View - Profile Summary Wireframe Match</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm relative">
+    
+    <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+      <span class="text-2xl"></span>
+    </h1>
+
+    <header class="border border-blue-200 p-3 mb-10 flex items-center justify-between">
+      <div class="flex items-center">
+        <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+          <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+          <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="flex -space-x-px mr-4">
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Offer</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Bookmark</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Message</button>
+      </div>
+
+      <div class="pr-2 cursor-pointer hover:text-blue-600 transition">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+    </header>
+
+    <div class="flex justify-between items-start mb-12 px-2">
+      <h2 class="text-xl font-bold text-black tracking-wide pt-2">Company View</h2>
+      <button onclick="handleModifyClick()" class="bg-[#b2dfdb] border border-gray-400 px-8 py-1.5 font-bold text-[15px] hover:bg-[#99ceca] active:bg-[#7bc2bc] transition tracking-wide shadow-sm">
+        Modify
+      </button>
+    </div>
+
+    <div class="max-w-[720px] mx-auto space-y-12 pb-12">
+      
+      <div class="grid grid-cols-12 gap-4 items-start">
+        <div class="col-span-4 text-right font-bold text-[16px] pr-12 text-black leading-tight pt-0.5">
+          Work Experience
+        </div>
+        <div class="col-span-8 flex justify-start text-[14px] font-normal text-gray-900 leading-relaxed max-w-[480px]">
+          I have experience in Java, Python, and mobile app development. I worked on team projects involving UI/UX design, database integration, and application development.
+        </div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-4 items-start">
+        <div class="col-span-4 text-right font-bold text-[16px] pr-12 text-black leading-tight pt-0.5">
+          Skills
+        </div>
+        <div class="col-span-8 flex justify-start text-[14px] font-normal text-gray-900 leading-relaxed max-w-[480px]">
+          Java, Python, SQL, Git/GitHub, Figma, Android Studio, Problem Solving, Team Collaboration, UI/UX Design
+        </div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-4 items-center">
+        <div class="col-span-4 text-right font-bold text-[16px] pr-12 text-black leading-tight">
+          Preferred Working Mode
+        </div>
+        <div class="col-span-8 flex justify-start text-[14px] font-normal text-gray-900 tracking-wide">
+          Remote Work
+        </div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-4 items-center">
+        <div class="col-span-4 text-right font-bold text-[16px] pr-12 text-black leading-tight">
+          Preferred Location
+        </div>
+        <div class="col-span-8 flex justify-start text-[14px] font-normal text-gray-900 tracking-wide">
+          Wollongong NSW
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Tab Highlighting Selection Controller
+    function switchTab(selectedButton) {
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-gray-100', 'text-blue-600', 'border-gray-400');
+        btn.classList.add('bg-white', 'text-black', 'border-gray-300');
+      });
+
+      selectedButton.classList.remove('bg-white', 'text-black', 'border-gray-300');
+      selectedButton.classList.add('bg-gray-100', 'text-blue-600', 'border-gray-400');
+    }
+
+    // Modify navigation simulation hub
+    function handleModifyClick() {
+      alert("Redirecting to profile edit mode settings panel workflow...");
+    }
+  </script>
+
+</body>
+</html>

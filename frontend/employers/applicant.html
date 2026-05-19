@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applicants</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-[#f2f2f2] p-3 font-sans text-black">
+  <div class="w-[630px] mx-auto bg-[#f7fbff]">
+    <nav class="h-[58px] bg-white border border-[#79c5ff] flex items-end px-4">
+      <svg width="90" height="42" viewBox="0 0 120 55"><path d="M25 37 C35 22, 24 15, 17 22 C10 29, 16 40, 30 38 C42 36, 48 23, 58 19" fill="none" stroke="#0059d9" stroke-width="9" stroke-linecap="round"/><path d="M54 34 C72 30, 82 17, 84 5 C75 18, 62 14, 59 28 Z" fill="#18a9f5"/><circle cx="24" cy="14" r="8" fill="#0059d9"/></svg>
+      <div class="ml-auto flex">
+        <button class="w-[96px] h-[29px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4 font-bold text-blue-600">Applicant</button>
+        <button onclick="window.location.href='searchfrom.html'" class="w-[96px] h-[29px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4">Search</button>
+        <button onclick="window.location.href='message.html'" class="w-[96px] h-[29px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4">Message</button>
+      </div>
+    </nav>
+
+    <section class="p-5">
+      <div class="font-bold text-base ml-14 mb-6">Applicants</div>
+      <div id="applicant-list" class="space-y-10">
+        <div class="text-gray-400 text-sm text-center py-6">Loading...</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    async function loadApplicants() {
+      if (!requireLogin('employer')) return;
+      const res = await getApplicants();
+      const list = document.getElementById('applicant-list');
+
+      if (!res.applicants || res.applicants.length === 0) {
+        list.innerHTML = '<div class="text-gray-400 text-sm text-center py-6">No applicants yet.</div>';
+        return;
+      }
+
+      list.innerHTML = res.applicants.map(item => {
+        const c = item.candidate;
+        const app = item.application;
+        return `
+          <div class="grid grid-cols-[135px_85px_240px_25px] gap-5 items-center">
+            <div class="text-base text-center leading-tight">
+              Match: ${app.match_score}%<br>
+              <span class="text-sm text-gray-600">${app.matched_keywords ? app.matched_keywords.split(',').map(k => '#' + k.trim()).join(' ') : ''}</span>
+            </div>
+            <div class="w-[80px] h-[72px] bg-[#d9d9d9] relative">
+              <svg class="absolute inset-0 w-full h-full stroke-gray-600 stroke-[0.8]" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%"/><line x1="100%" y1="0" x2="0" y2="100%"/></svg>
+            </div>
+            <div class="border border-[#79c5ff] bg-white min-h-[98px] p-2 text-xs leading-tight">
+              <strong class="text-sm">${c ? c.full_name : 'Unknown'}</strong><br>
+              ${c ? c.job_title || '' : ''}<br>
+              ${c ? c.skills || '' : ''}<br>
+              ${c ? (c.experience_years || '') + ' experience' : ''}<br>
+              ${c ? c.location || '' : ''}
+            </div>
+            <div>
+              <button onclick="sendOffer(${c ? c.id : 0}, ${app.job_id})" class="text-xs bg-[#b2ebf2] border border-gray-400 px-1 py-1 font-bold hover:bg-[#99d9e0]">Offer</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function sendOffer(candidateId, jobId) {
+      const date = prompt('Interview date (e.g. Sep 10):');
+      const time = prompt('Interview time (e.g. 10:00 AM):');
+      const msg = prompt('Message to candidate:') || '';
+      if (!date) return;
+
+      const res = await sendOffer({ candidate_id: candidateId, job_id: jobId, interview_date: date, interview_time: time, message: msg });
+      if (res.error) alert(res.error);
+      else alert('Offer sent!');
+    }
+
+    loadApplicants();
+  </script>
+</body>
+</html>

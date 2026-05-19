@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Today's No.1 Job Details Wireframe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm relative">
+    
+    <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+      Search Page <span class="text-2xl">★</span>
+    </h1>
+
+    <header class="border border-blue-200 p-3 mb-10 flex items-center justify-between">
+      <div class="flex items-center">
+        <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+          <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+          <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="flex -space-x-px mr-4">
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-400 rounded-t-md text-lg bg-gray-100 text-blue-600">Offer</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Bookmark</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Message</button>
+      </div>
+
+      <div class="pr-2 cursor-pointer hover:text-blue-600 transition">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-12 gap-8 items-start">
+      
+      <div class="col-span-4 text-center">
+        <div class="font-bold text-lg text-black mb-3 text-left pl-2">Today’s No.1</div>
+        <div class="w-full h-44 bg-[#dddddd] border border-gray-500 relative">
+          <svg class="absolute inset-0 w-full h-full stroke-gray-600 stroke-[1]" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <line x1="0" y1="0" x2="100%" y2="100%" />
+            <line x1="100%" y1="0" x2="0" y2="100%" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="col-span-8 relative">
+        
+        <div class="flex justify-between items-start mb-6 pr-4">
+          <div class="max-w-[85%]">
+            <span class="font-bold text-black text-[15px]">Match Keyword</span>
+            <span class="text-[15px] font-normal text-gray-900 block mt-1 leading-snug">
+              #Java #Backend #SQL #Problem Solving #Communication
+            </span>
+          </div>
+          <button onclick="toggleBookmark(this)" class="text-black hover:text-blue-600 p-1" id="bookmark-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="mb-4">
+          <h2 class="text-xl font-bold text-black tracking-wide">TechTech Solutions</h2>
+        </div>
+
+        <div class="mb-6">
+          <h4 class="font-bold text-black text-[15px] mb-1">About Company</h4>
+          <p class="text-[14px] text-gray-900 font-normal leading-relaxed">
+            TechTech Solutions is a growing software company focused on backend system development and cloud-based applications. The company works on scalable web services and business solutions for clients across multiple industries. Team members collaborate in an Agile environment and contribute to real-world software projects.
+          </p>
+        </div>
+
+        <div class="space-y-4 text-[14px]">
+          
+          <div class="grid grid-cols-12 gap-2">
+            <span class="col-span-5 font-bold text-black text-right pr-6 underline decoration-black decoration-1 underline-offset-2">Job Description</span>
+            <span class="col-span-7 font-normal text-gray-900 leading-normal">
+              Develop and maintain backend systems using Java and SQL. Collaborate with team members to improve application performance and support system integration tasks.
+            </span>
+          </div>
+
+          <div class="grid grid-cols-12 gap-2">
+            <span class="col-span-5 font-bold text-black text-right pr-6">Required Education Level</span>
+            <span class="col-span-7 font-normal text-gray-900 leading-normal">
+              Bachelor’s Degree in Computer Science or related field
+            </span>
+          </div>
+
+          <div class="grid grid-cols-12 gap-2">
+            <span class="col-span-5 font-bold text-black text-right pr-6">Required Skills</span>
+            <span class="col-span-7 font-normal text-gray-900 leading-normal">
+              Java, SQL, Backend Development, Problem Solving, Communication
+            </span>
+          </div>
+
+          <div class="grid grid-cols-12 gap-2">
+            <span class="col-span-5 font-bold text-black text-right pr-6">Years of Experience</span>
+            <span class="col-span-7 font-normal text-gray-900 leading-normal">
+              0–1 years
+            </span>
+          </div>
+
+          <div class="grid grid-cols-12 gap-2">
+            <span class="col-span-5 font-bold text-black text-right pr-6">Work Mode</span>
+            <span class="col-span-7 font-normal text-gray-900 leading-normal">
+              Hybrid
+            </span>
+          </div>
+
+          <div class="grid grid-cols-12 gap-2">
+            <span class="col-span-5 font-bold text-black text-right pr-6">Job Location</span>
+            <span class="col-span-7 font-normal text-gray-900 leading-normal">
+              Sydney, NSW
+            </span>
+          </div>
+
+          <div class="grid grid-cols-12 gap-2">
+            <span class="col-span-5 font-bold text-black text-right pr-6">Salary</span>
+            <span class="col-span-7 font-normal text-gray-900 leading-normal">
+              $60,000 – $70,000 per year
+            </span>
+          </div>
+
+          <div class="grid grid-cols-12 gap-2">
+            <span class="col-span-5 font-bold text-black text-right pr-6">Employment Type</span>
+            <span class="col-span-7 font-normal text-gray-900 leading-normal">
+              Full-time
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex justify-center mt-12">
+      <button onclick="handleApply()" class="bg-[#b2dfdb] border border-gray-400 px-10 py-1.5 font-bold text-[15px] hover:bg-[#99ceca] active:bg-[#7bc2bc] transition">
+        Apply
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // Tab Highlighting Controller
+    function switchTab(selectedButton) {
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-gray-100', 'text-blue-600', 'border-gray-400');
+        btn.classList.add('bg-white', 'text-black', 'border-gray-300');
+      });
+
+      selectedButton.classList.remove('bg-white', 'text-black', 'border-gray-300');
+      selectedButton.classList.add('bg-gray-100', 'text-blue-600', 'border-gray-400');
+    }
+
+    // Bookmark Toggle State Engine
+    let isBookmarked = false;
+    function toggleBookmark(btn) {
+      isBookmarked = !isBookmarked;
+      const svg = btn.querySelector('svg');
+      if (isBookmarked) {
+        svg.setAttribute('fill', '#000000'); // Solid fill state
+      } else {
+        svg.setAttribute('fill', 'none');    // Return to outline wireframe state
+      }
+    }
+
+    // Application Submission Feedback Trigger
+    function handleApply() {
+      alert("Application Submitted successfully!");
+    }
+  </script>
+
+</body>
+</html>

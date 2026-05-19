@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company View Candidate View</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f2f2f2;
+      padding:10px;
+      color:#000;
+    }
+
+    .page-title{
+      width:630px;
+      margin:0 auto 6px;
+      color:#b5b5b5;
+      font-size:12px;
+    }
+
+    .page{
+      width:630px;
+      min-height:630px;
+      margin:0 auto;
+      background:#f7fbff;
+    }
+
+    .navbar{
+      height:58px;
+      background:#fff;
+      border:1px solid #79c5ff;
+      display:flex;
+      align-items:flex-end;
+      padding:0 18px;
+    }
+
+    .logo{
+      width:100px;
+      height:48px;
+      display:flex;
+      align-items:center;
+      margin-right:auto;
+    }
+
+    .logo svg{
+      width:90px;
+      height:42px;
+    }
+
+    .nav-btn{
+      width:96px;
+      height:29px;
+      background:white;
+      border:1px solid #79c5ff;
+      border-bottom:none;
+      border-radius:5px 5px 0 0;
+      margin-left:16px;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .profile{
+      width:25px;
+      height:45px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding-top:13px;
+      margin-left:12px;
+    }
+
+    .profile svg{
+      width:18px;
+      height:18px;
+    }
+
+    .hero{
+      height:55px;
+      background:#d9d9d9;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid #aaa;
+    }
+
+    .hero::before,
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:-10px;
+      top:27px;
+      width:660px;
+      height:1px;
+      background:#555;
+    }
+
+    .hero::before{
+      transform:rotate(5deg);
+    }
+
+    .hero::after{
+      transform:rotate(-5deg);
+    }
+
+    .content{
+      position:relative;
+      padding:12px 22px 30px;
+    }
+
+    .section-title{
+      font-size:16px;
+      margin-bottom:10px;
+    }
+
+    .company-name{
+      text-align:center;
+      font-size:16px;
+      font-weight:bold;
+      margin-bottom:14px;
+    }
+
+    .modify-btn{
+      position:absolute;
+      top:45px;
+      right:34px;
+      width:68px;
+      height:20px;
+      background:#b2ebf2;
+      border:none;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .info{
+      width:500px;
+      margin:0 auto;
+    }
+
+    .info-row{
+      display:grid;
+      grid-template-columns:155px 1fr;
+      column-gap:25px;
+      margin-bottom:16px;
+      font-size:12px;
+      line-height:15px;
+    }
+
+    .label{
+      text-align:center;
+    }
+
+    .value{
+      text-align:left;
+    }
+
+    .small-image{
+      width:175px;
+      height:30px;
+      background:#d9d9d9;
+      position:relative;
+      margin-top:-5px;
+    }
+
+    .bottom-image{
+      width:360px;
+      height:30px;
+      background:#d9d9d9;
+      position:relative;
+      margin:20px auto 0;
+    }
+
+    .small-image::before,
+    .small-image::after,
+    .bottom-image::before,
+    .bottom-image::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom right, transparent 49.5%, #555 50%, transparent 50.5%);
+    }
+
+    .small-image::after,
+    .bottom-image::after{
+      background:linear-gradient(to top right, transparent 49.5%, #555 50%, transparent 50.5%);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-title">Company View (Candidate View)★</div>
+
+  <main class="page">
+
+    <nav class="navbar">
+      <div class="logo">
+        <svg viewBox="0 0 120 55" xmlns="http://www.w3.org/2000/svg">
+          <path d="M25 37 C35 22, 24 15, 17 22 C10 29, 16 40, 30 38 C42 36, 48 23, 58 19"
+            fill="none" stroke="#0059d9" stroke-width="9" stroke-linecap="round"/>
+          <path d="M54 34 C72 30, 82 17, 84 5 C75 18, 62 14, 59 28 Z"
+            fill="#18a9f5"/>
+          <circle cx="24" cy="14" r="8" fill="#0059d9"/>
+        </svg>
+      </div>
+
+      <button class="nav-btn">Applicant</button>
+      <button class="nav-btn">Bookmark</button>
+      <button class="nav-btn">Message</button>
+
+      <div class="profile">
+        <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+    </nav>
+
+    <div class="hero"></div>
+
+    <section class="content">
+      <div class="section-title">Comany Profile (Candidate View)</div>
+
+      <div class="company-name">BrightNova Digital</div>
+
+      <button class="modify-btn">Modify</button>
+
+      <div class="info">
+
+        <div class="info-row">
+          <div class="label">Job title</div>
+          <div class="value">Frontend Web Developer</div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Company information</div>
+          <div class="value">
+            BrightNova Digital is a technology company<br>
+            specializing in responsive web applications and modern<br>
+            UI development for startups and business clients.
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Job description</div>
+          <div class="value">
+            Develop and maintain responsive web interfaces using<br>
+            JavaScript and collaborate with designers to improve<br>
+            user experience and application performance.
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Required education level</div>
+          <div class="value">Bachelor’s Degree in Computer Science, IT, or related field</div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Required skills</div>
+          <div class="value">JavaScript, HTML/CSS, Git, UI/UX, Communication</div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Years of experience</div>
+          <div class="value">1–2 years</div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Work mode</div>
+          <div class="value">Remote</div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Job location</div>
+          <div class="value">Brisbane QLD</div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Salary</div>
+          <div class="value">$65,000 – $75,000 per year</div>
+        </div>
+
+        <div class="info-row">
+          <div class="label">Employment Type</div>
+          <div class="value">
+            <div class="small-image"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bottom-image"></div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

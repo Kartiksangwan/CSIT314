@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Candidates</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-[#f2f2f2] p-5 font-sans text-black">
+  <div class="w-[700px] mx-auto bg-[#f7fbff]">
+    <nav class="h-[60px] bg-white border border-[#7cc9ff] flex items-end px-5">
+      <div class="w-[90px] h-[40px] bg-[#1e88ff] rounded mr-auto"></div>
+      <button onclick="window.location.href='applicant.html'" class="w-[100px] h-[32px] border border-[#7cc9ff] bg-white rounded-t ml-4">Applicant</button>
+      <button class="w-[100px] h-[32px] border border-[#7cc9ff] bg-white rounded-t ml-4 font-bold text-blue-600">Search</button>
+      <button onclick="window.location.href='message.html'" class="w-[100px] h-[32px] border border-[#7cc9ff] bg-white rounded-t ml-4">Message</button>
+    </nav>
+
+    <div class="p-10">
+      <div class="flex items-center gap-3 mb-6">
+        <input type="text" id="kw" placeholder="Search by skill or keyword..."
+          class="w-[200px] h-[30px] bg-[#b2ebf2] border-none px-3 text-sm font-bold placeholder-gray-700 focus:outline-none">
+        <button onclick="doSearch()" class="px-4 py-1 bg-[#b2ebf2] font-bold text-sm border border-gray-400 hover:bg-[#99d9e0]">🔍 Search</button>
+      </div>
+
+      <div id="result-list" class="space-y-6">
+        <div class="text-gray-400 text-sm text-center py-6">Search for candidates by skill e.g. "JavaScript", "Python"</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (!requireLogin('employer')) {}
+
+    async function doSearch() {
+      const kw = document.getElementById('kw').value;
+      const list = document.getElementById('result-list');
+      list.innerHTML = '<div class="text-gray-400 text-sm text-center py-6">Searching...</div>';
+
+      const res = await searchCandidates(kw);
+      if (!res.candidates || res.candidates.length === 0) {
+        list.innerHTML = '<div class="text-gray-400 text-sm text-center py-6">No candidates found.</div>';
+        return;
+      }
+
+      list.innerHTML = res.candidates.map(c => `
+        <div class="border border-[#79c5ff] bg-white p-4 flex justify-between items-start">
+          <div class="text-sm leading-relaxed">
+            <div class="font-bold text-base">${c.full_name || 'Unknown'}</div>
+            <div class="text-gray-700">${c.job_title || ''}</div>
+            <div class="text-gray-600 text-xs mt-1">Skills: ${c.skills || ''}</div>
+            <div class="text-gray-600 text-xs">📍 ${c.location || ''} &nbsp; 💼 ${c.work_mode || ''}</div>
+            <div class="text-gray-600 text-xs">🎓 ${c.education || ''} &nbsp; ⏱ ${c.experience_years || ''}</div>
+            ${c.match_score ? `<div class="text-blue-600 font-bold text-xs mt-1">Match: ${c.match_score}%</div>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('kw').addEventListener('keypress', e => {
+      if (e.key === 'Enter') doSearch();
+    });
+  </script>
+</body>
+</html>

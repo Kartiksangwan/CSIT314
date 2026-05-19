@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-[#f2f2f2] p-6 font-sans text-black">
+  <div class="w-[700px] mx-auto bg-[#f7fbff]">
+    <nav class="h-[65px] bg-white border border-[#79c5ff] flex items-end px-6 justify-between">
+      <svg width="95" height="45" viewBox="0 0 120 55"><path d="M25 37 C35 22, 24 15, 17 22 C10 29, 16 40, 30 38 C42 36, 48 23, 58 19" fill="none" stroke="#0059d9" stroke-width="9" stroke-linecap="round"/><path d="M54 34 C72 30, 82 17, 84 5 C75 18, 62 14, 59 28 Z" fill="#18a9f5"/><circle cx="24" cy="14" r="8" fill="#0059d9"/></svg>
+      <a href="../candidates/loginnC.html" class="mb-2 text-sm text-blue-600 font-bold hover:underline">Candidate Login</a>
+    </nav>
+    <div class="pt-10 pb-10">
+      <h1 class="text-center text-sm font-bold mb-10">Company Login</h1>
+      <div id="err" class="text-red-600 text-xs text-center mb-4 hidden"></div>
+      <form onsubmit="doLogin(event)" class="w-[380px] mx-auto space-y-10">
+        <div class="grid grid-cols-[100px_210px] gap-x-[60px] items-center">
+          <label class="text-xs text-right">Email</label>
+          <input type="email" id="email" required class="w-[210px] h-[30px] border border-[#8dd2ff] px-2 text-xs">
+        </div>
+        <div class="grid grid-cols-[100px_210px] gap-x-[60px] items-center">
+          <label class="text-xs text-right">Password</label>
+          <input type="password" id="password" required class="w-[210px] h-[30px] border border-[#8dd2ff] px-2 text-xs">
+        </div>
+        <div class="flex justify-center mt-4">
+          <button type="submit" id="btn" class="w-[118px] h-[32px] bg-[#b2ebf2] border-none text-xs font-bold hover:bg-[#99d9e0] transition">LogIn</button>
+        </div>
+      </form>
+      <p class="text-center text-xs mt-6 text-gray-500">New company? <a href="Companyinformation.html" class="text-blue-600 font-bold">Register here</a></p>
+    </div>
+  </div>
+  <script>
+    async function doLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn');
+      const err = document.getElementById('err');
+      btn.textContent = 'Logging in...'; btn.disabled = true;
+      const res = await login(document.getElementById('email').value, document.getElementById('password').value);
+      if (res.error) {
+        err.textContent = res.error; err.classList.remove('hidden');
+        btn.textContent = 'LogIn'; btn.disabled = false;
+      } else if (res.user.role !== 'employer') {
+        err.textContent = 'This account is not an employer account.'; err.classList.remove('hidden');
+        btn.textContent = 'LogIn'; btn.disabled = false;
+      } else {
+        saveSession(res.user);
+        window.location.href = 'mypage.html';
+      }
+    }
+  </script>
+</body>
+</html>

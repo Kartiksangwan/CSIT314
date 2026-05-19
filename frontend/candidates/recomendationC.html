@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Today's Recommendation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black">
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm">
+    <header class="border border-blue-200 p-3 mb-10 flex items-center justify-between">
+      <svg width="120" height="45" viewBox="0 0 120 45" fill="none"><path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/><path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/><path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="flex -space-x-px mr-4">
+        <button onclick="window.location.href='offerpageC.html'" class="px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Offer</button>
+        <button onclick="window.location.href='bookmarkC.html'" class="px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Bookmark</button>
+        <button onclick="window.location.href='massageC.html'" class="px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Message</button>
+      </div>
+      <button onclick="window.location.href='mypageC.html'" class="pr-2 text-sm text-blue-600 font-bold">My Page</button>
+    </header>
+
+    <h2 class="text-xl font-bold mb-8 pl-4">Today's Recommendation</h2>
+    <div id="rec-list" class="space-y-6">
+      <div class="text-gray-400 text-sm text-center py-8">Loading recommendations...</div>
+    </div>
+  </div>
+
+  <script>
+    async function loadRecs() {
+      if (!requireLogin('candidate')) return;
+      const res = await getTodaysRecommendations();
+      const list = document.getElementById('rec-list');
+
+      if (!res.recommendations || res.recommendations.length === 0) {
+        list.innerHTML = '<div class="text-gray-400 text-sm text-center py-8">No recommendations yet. Update your profile with skills to get matches!</div>';
+        return;
+      }
+
+      list.innerHTML = res.recommendations.map((job, i) => `
+        <div class="grid grid-cols-12 gap-4 items-center pb-6 border-b border-gray-400">
+          <div class="col-span-1 text-2xl font-bold text-center">${i + 1}</div>
+          <div class="col-span-3 text-center font-bold text-sm leading-tight">
+            <div class="text-blue-700">Match: ${job.match_score}%</div>
+            <div class="font-normal text-gray-700 mt-1 text-xs">
+              ${job.matched_keywords ? job.matched_keywords.map(k => '#' + k).join(' ') : ''}
+            </div>
+          </div>
+          <div class="col-span-6">
+            <div class="border border-blue-300 p-3 bg-white min-h-[90px]">
+              <h3 class="text-[14px] font-bold">${job.company_name || 'Company'}</h3>
+              <h4 class="text-[14px] font-normal text-gray-900">${job.job_title}</h4>
+              <p class="text-[13px] text-gray-700 mt-1">📍 ${job.location || ''} &nbsp; 💼 ${job.work_mode || ''}</p>
+              <p class="text-[13px] text-gray-700">💰 ${job.salary || 'Not specified'}</p>
+            </div>
+          </div>
+          <div class="col-span-2 flex flex-col gap-2">
+            <button onclick="applyJob(${job.id}, this)" class="bg-[#b2dfdb] border border-gray-400 px-2 py-1 text-xs font-bold hover:bg-[#99ceca]">Apply</button>
+            <button onclick="bookmarkJob(${job.id}, this)" class="border border-gray-400 px-2 py-1 text-xs font-bold hover:bg-gray-100">Save</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function applyJob(jobId, btn) {
+      btn.textContent = '...'; btn.disabled = true;
+      const res = await applyToJob(jobId);
+      if (res.error) { alert(res.error); btn.textContent = 'Apply'; btn.disabled = false; }
+      else { btn.textContent = '✓ Applied'; btn.classList.add('bg-green-200'); }
+    }
+
+    async function bookmarkJob(jobId, btn) {
+      const res = await addBookmark(jobId);
+      if (res.error) { alert(res.error); }
+      else { btn.textContent = '✓ Saved'; btn.classList.add('bg-yellow-100'); }
+    }
+
+    loadRecs();
+  </script>
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Search Page</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f2f2f2;
+      padding:12px;
+      color:#000;
+    }
+
+    .page-title{
+      width:640px;
+      margin:0 auto 6px;
+      color:#b5b5b5;
+      font-size:12px;
+    }
+
+    .page{
+      width:640px;
+      min-height:820px;
+      margin:auto;
+      background:#f7fbff;
+    }
+
+    .navbar{
+      height:58px;
+      background:#fff;
+      border:1px solid #79c5ff;
+      display:flex;
+      align-items:flex-end;
+      padding:0 16px;
+    }
+
+    .logo{
+      width:100px;
+      height:48px;
+      display:flex;
+      align-items:center;
+      margin-right:auto;
+    }
+
+    .logo svg{
+      width:90px;
+      height:42px;
+    }
+
+    .nav-btn{
+      width:96px;
+      height:29px;
+      background:white;
+      border:1px solid #79c5ff;
+      border-bottom:none;
+      border-radius:5px 5px 0 0;
+      margin-left:16px;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .profile{
+      width:25px;
+      height:45px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding-top:13px;
+      margin-left:12px;
+    }
+
+    .profile svg{
+      width:18px;
+      height:18px;
+    }
+
+    .content{
+      padding:22px 55px 35px;
+    }
+
+    .keyword-section{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      margin-bottom:28px;
+    }
+
+    .keywords{
+      font-size:16px;
+      line-height:24px;
+    }
+
+    .offer-btn{
+      width:82px;
+      height:28px;
+      background:#b2ebf2;
+      border:none;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:18px;
+    }
+
+    .resume-box{
+      width:380px;
+      min-height:350px;
+      border:1px solid #666;
+      background:white;
+      margin:0 auto 45px;
+      display:flex;
+    }
+
+    .left-panel{
+      width:132px;
+      border-right:1px solid #666;
+      padding:10px;
+      text-align:center;
+    }
+
+    .avatar{
+      width:55px;
+      height:55px;
+      border-radius:50%;
+      background:#d9d9d9;
+      margin:0 auto 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .avatar svg{
+      width:24px;
+      height:24px;
+    }
+
+    .candidate-name{
+      font-size:20px;
+      font-weight:bold;
+      margin-bottom:14px;
+    }
+
+    .contact-title{
+      font-size:15px;
+      font-weight:bold;
+      margin-bottom:18px;
+    }
+
+    .contact-item{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:10px;
+      margin-bottom:10px;
+      text-align:left;
+    }
+
+    .contact-item svg{
+      width:14px;
+      height:14px;
+    }
+
+    .right-panel{
+      flex:1;
+      padding:12px 10px;
+      font-size:8px;
+      line-height:10px;
+    }
+
+    .resume-section{
+      margin-bottom:18px;
+    }
+
+    .resume-section strong{
+      display:block;
+      margin-bottom:4px;
+      font-size:9px;
+    }
+
+    .info-section{
+      display:grid;
+      grid-template-columns:150px 1fr;
+      column-gap:24px;
+      row-gap:38px;
+      align-items:start;
+      margin-top:10px;
+    }
+
+    .info-label{
+      font-size:18px;
+      font-weight:bold;
+      text-align:center;
+    }
+
+    .info-value{
+      font-size:16px;
+      line-height:22px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="page-title">
+    Search Page★
+  </div>
+
+  <main class="page">
+
+    <nav class="navbar">
+
+      <div class="logo">
+
+        <svg viewBox="0 0 120 55"
+        xmlns="http://www.w3.org/2000/svg">
+
+          <path
+          d="M25 37 C35 22, 24 15, 17 22
+          C10 29, 16 40, 30 38
+          C42 36, 48 23, 58 19"
+          fill="none"
+          stroke="#0059d9"
+          stroke-width="9"
+          stroke-linecap="round"/>
+
+          <path
+          d="M54 34
+          C72 30, 82 17, 84 5
+          C75 18, 62 14, 59 28 Z"
+          fill="#18a9f5"/>
+
+          <circle
+          cx="24"
+          cy="14"
+          r="8"
+          fill="#0059d9"/>
+
+        </svg>
+
+      </div>
+
+      <button class="nav-btn">Applicant</button>
+      <button class="nav-btn">Bookmark</button>
+      <button class="nav-btn">Message</button>
+
+      <div class="profile">
+
+        <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="black"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+
+        </svg>
+
+      </div>
+
+    </nav>
+
+    <section class="content">
+
+      <div class="keyword-section">
+
+        <div class="keywords">
+          Matched Keywords:<br>
+          #HTML/CSS #Frontend #JavaScript #Field of Study
+        </div>
+
+        <button class="offer-btn">
+          Offer
+        </button>
+
+      </div>
+
+      <!-- RESUME -->
+
+      <div class="resume-box">
+
+        <div class="left-panel">
+
+          <div class="avatar">
+
+            <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+
+            </svg>
+
+          </div>
+
+          <div class="candidate-name">
+            Jun Jonson
+          </div>
+
+          <div class="contact-title">
+            Contact
+          </div>
+
+          <div class="contact-item">
+
+            <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2">
+
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+              19.79 19.79 0 0 1-8.63-3.07
+              19.5 19.5 0 0 1-6-6
+              A19.79 19.79 0 0 1 2.09 4.18
+              2 2 0 0 1 4.11 2h3
+              a2 2 0 0 1 2 1.72
+              c.12.81.37 1.6.72 2.34
+              a2 2 0 0 1-.45 2.11L8.09 9.91
+              a16 16 0 0 0 6 6l1.74-1.29
+              a2 2 0 0 1 2.11-.45
+              c.74.35 1.53.6 2.34.72
+              A2 2 0 0 1 22 16.92z"/>
+
+            </svg>
+
+            0432 834 018
+
+          </div>
+
+          <div class="contact-item">
+
+            <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="2">
+
+              <path d="M4 4h16v16H4z"/>
+              <path d="M22 6l-10 7L2 6"/>
+
+            </svg>
+
+            example@gmail.com
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+
+        <div class="right-panel">
+
+          <div class="resume-section">
+
+            <strong>Profile</strong>
+
+            Experienced frontend developer with a strong background in responsive
+            web development and UI-focused applications. Skilled in HTML/CSS,
+            JavaScript, and frontend collaboration. Passionate about creating clean,
+            user-friendly interfaces and improving user experience through modern web
+            technologies.
+
+          </div>
+
+          <div class="resume-section">
+
+            <strong>Education</strong>
+
+            Bachelor of Information Technology<br>
+            University of Queensland<br>
+            Graduation: June 2023<br>
+            Major Field of Study: Web Development
+
+          </div>
+
+          <div class="resume-section">
+
+            <strong>Project</strong>
+
+            E-Commerce Website Project<br>
+            Developed a responsive online shopping website using HTML, CSS, and
+            JavaScript with mobile-friendly UI design.<br><br>
+
+            Portfolio Website Development<br>
+            Designed and implemented a personal portfolio website showcasing
+            frontend projects and responsive layouts.
+
+          </div>
+
+          <div class="resume-section">
+
+            <strong>Certifications</strong>
+
+            Frontend Web Development Certificate<br>
+            JavaScript Essentials Certification<br>
+            Responsive Web Design Certificate
+
+          </div>
+
+          <div class="resume-section">
+
+            <strong>Professional Skills</strong>
+
+            UI/UX Design<br>
+            Frontend Development<br>
+            Communication<br>
+            Team Collaboration<br>
+            Problem Solving<br>
+            Adaptability
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- BOTTOM INFO -->
+
+      <div class="info-section">
+
+        <div class="info-label">
+          Work Experience
+        </div>
+
+        <div class="info-value">
+          Worked on frontend development projects involving
+          responsive UI design and interactive web applications.
+          Collaborated with designers and developers in team-
+          based projects using Git and agile workflows.
+        </div>
+
+        <div class="info-label">
+          Skills
+        </div>
+
+        <div class="info-value">
+          HTML/CSS, JavaScript, Git/GitHub, Figma, Responsive
+          Design, UI/UX Design, Team Collaboration, Problem
+          Solving
+        </div>
+
+        <div class="info-label">
+          Preferred Working Mode
+        </div>
+
+        <div class="info-value">
+          Remote Work
+        </div>
+
+        <div class="info-label">
+          Preferred Location
+        </div>
+
+        <div class="info-value">
+          Brisbane, QLD
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

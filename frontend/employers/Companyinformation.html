@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Registration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-[#f2f2f2] py-6 font-sans text-black">
+  <div class="w-[700px] mx-auto bg-[#f7fbff]">
+    <nav class="h-[65px] bg-white border border-[#79c5ff] flex items-end px-6">
+      <svg width="95" height="45" viewBox="0 0 120 55"><path d="M25 37 C35 22, 24 15, 17 22 C10 29, 16 40, 30 38 C42 36, 48 23, 58 19" fill="none" stroke="#0059d9" stroke-width="9" stroke-linecap="round"/><path d="M54 34 C72 30, 82 17, 84 5 C75 18, 62 14, 59 28 Z" fill="#18a9f5"/><circle cx="24" cy="14" r="8" fill="#0059d9"/></svg>
+    </nav>
+    <div class="pt-6 pb-10 px-10">
+      <h1 class="text-base font-bold mb-4">Create Employer Account — Step 1 of 2</h1>
+      <div id="err" class="text-red-600 text-xs mb-3 hidden"></div>
+
+      <form onsubmit="goToStep2(event)" class="space-y-4">
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-center">
+          <label class="text-sm font-bold text-center">Email</label>
+          <input type="email" id="email" required class="h-[32px] border border-gray-500 px-2 text-xs">
+        </div>
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-center">
+          <label class="text-sm font-bold text-center">Password</label>
+          <input type="password" id="password" required class="h-[32px] border border-gray-500 px-2 text-xs">
+        </div>
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-center">
+          <label class="text-sm font-bold text-center">Company name</label>
+          <input type="text" id="company_name" required class="h-[32px] border border-gray-500 px-2 text-xs">
+        </div>
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-start">
+          <label class="text-sm font-bold text-center pt-2">Company information</label>
+          <textarea id="company_info" rows="3" class="border border-gray-500 px-2 py-1 text-xs resize-none"></textarea>
+        </div>
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-center">
+          <label class="text-sm font-bold text-center">Job title</label>
+          <input type="text" id="job_title" required class="h-[32px] border border-gray-500 px-2 text-xs">
+        </div>
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-start">
+          <label class="text-sm font-bold text-center pt-2">Job description</label>
+          <textarea id="job_description" rows="3" class="border border-gray-500 px-2 py-1 text-xs resize-none"></textarea>
+        </div>
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-center">
+          <label class="text-sm font-bold text-center">Required education</label>
+          <input type="text" id="required_education" class="h-[32px] border border-gray-500 px-2 text-xs">
+        </div>
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-center">
+          <label class="text-sm font-bold text-center">Required skills</label>
+          <input type="text" id="required_skills" placeholder="e.g. JavaScript, HTML, Git" class="h-[32px] border border-gray-500 px-2 text-xs">
+        </div>
+        <div class="grid grid-cols-[180px_1fr] gap-x-6 items-center">
+          <label class="text-sm font-bold text-center">Years of experience</label>
+          <input type="text" id="experience_years" placeholder="e.g. 1-2 years" class="h-[32px] border border-gray-500 px-2 text-xs">
+        </div>
+        <div class="flex justify-center pt-4">
+          <button type="submit" id="btn" class="bg-[#b2ebf2] px-6 py-2 font-bold text-sm hover:bg-[#99d9e0] transition">Next →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    function goToStep2(e) {
+      e.preventDefault();
+      // save to sessionStorage for step 2
+      sessionStorage.setItem('reg_step1', JSON.stringify({
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        company_name: document.getElementById('company_name').value,
+        company_info: document.getElementById('company_info').value,
+        job_title: document.getElementById('job_title').value,
+        job_description: document.getElementById('job_description').value,
+        required_education: document.getElementById('required_education').value,
+        required_skills: document.getElementById('required_skills').value,
+        experience_years: document.getElementById('experience_years').value
+      }));
+      window.location.href = 'Companyinformation2.html';
+    }
+  </script>
+</body>
+</html>

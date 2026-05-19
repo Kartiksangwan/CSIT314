@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Page - Company View Wireframe Match</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm relative">
+    
+    <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+      My page (Company View)<span class="text-2xl">★</span>
+    </h1>
+
+    <header class="border border-blue-200 p-3 mb-6 flex items-center justify-between">
+      <div class="flex items-center">
+        <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+          <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+          <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="flex -space-x-px mr-4">
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Offer</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Bookmark</button>
+        <button onclick="switchTab(this)" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white text-black">Message</button>
+      </div>
+    </header>
+
+    <div class="flex justify-between items-start mb-4 px-2">
+      <h2 class="text-xl font-bold text-black tracking-wide pt-2">Company View</h2>
+      <button onclick="handleModify()" class="bg-[#b2dfdb] border border-gray-400 px-8 py-1.5 font-bold text-[15px] hover:bg-[#99ceca] active:bg-[#7bc2bc] transition tracking-wide shadow-sm">
+        Modify
+      </button>
+    </div>
+
+    <div class="border border-gray-500 bg-white max-w-[650px] mx-auto grid grid-cols-12 min-h-[580px] text-black">
+      
+      <div class="col-span-4 border-r border-gray-400 p-4 flex flex-col items-center space-y-4">
+        
+        <div class="w-14 h-14 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center mt-2 shadow-sm">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+
+        <div class="w-full text-left space-y-3 pl-2">
+          <h3 class="text-[17px] font-bold tracking-wide leading-tight">Liam Smith</h3>
+          
+          <div class="space-y-1.5 text-[12px] font-bold">
+            <div class="text-gray-900 uppercase tracking-wider text-[11px] mb-0.5">Contact</div>
+            
+            <div class="flex items-center space-x-1">
+              <span>📞</span>
+              <span class="tabular-nums">0432 982 948</span>
+            </div>
+            
+            <div class="flex items-center space-x-1 break-all">
+              <span>✉</span>
+              <span>example@gmail.com</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-span-8 p-6 space-y-5 text-[11px] text-gray-900 font-normal leading-normal">
+        
+        <div>
+          <h4 class="font-bold text-black text-[12px] uppercase tracking-wide mb-1">Profile</h4>
+          <p class="text-justify pr-2">
+            Experienced software developer with a strong background in mobile application development, UI/UX design, and database integration. Skilled in Java, Python, and collaborative software development. Passionate about creating user-focused applications and improving system efficiency through innovative solutions.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-black text-[12px] uppercase tracking-wide mb-1">Education</h4>
+          <div class="space-y-0.5">
+            <div class="font-bold text-black text-[11.5px]">Bachelor of Computer Science</div>
+            <div>University of Wollongong</div>
+            <div>Graduation: June 2023</div>
+            <div>Major / Field of Study: Computer Science - Software Engineering</div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-black text-[12px] uppercase tracking-wide mb-1">Project</h4>
+          <div class="space-y-3">
+            <div>
+              <div class="font-bold text-black">Mobile Application Development Project</div>
+              <p class="pr-2">Developed a mobile application using Java and Android Studio with database integration and UI design.</p>
+            </div>
+            <div>
+              <div class="font-bold text-black">Intelligent Talent Matching Platform</div>
+              <p class="pr-2">Designed UI/UX prototypes and collaborated in a team-based software development project using Figma.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-black text-[12px] uppercase tracking-wide mb-1">Certifications</h4>
+          <ul class="space-y-0.5 list-none font-medium text-black">
+            <li>AWS Cloud Practitioner</li>
+            <li>Google UX Design Fundamentals</li>
+            <li>Git & GitHub Essentials</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-black text-[12px] uppercase tracking-wide mb-1">Professional Skills</h4>
+          <ul class="space-y-0.5 list-none font-medium text-black">
+            <li>Communication</li>
+            <li>Problem Solving</li>
+            <li>Leadership</li>
+            <li>Time Management</li>
+            <li>Adaptability</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Tab Button Navigation Switcher
+    function switchTab(selectedButton) {
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-gray-100', 'text-blue-600', 'border-gray-400');
+        btn.classList.add('bg-white', 'text-black', 'border-gray-300');
+      });
+
+      selectedButton.classList.remove('bg-white', 'text-black', 'border-gray-300');
+      selectedButton.classList.add('bg-gray-100', 'text-blue-600', 'border-gray-400');
+    }
+
+    // Modify Button Event Handler
+    function handleModify() {
+      alert("Opening configuration workflows to adjust profile parameters and resume templates...");
+    }
+  </script>
+
+</body>
+</html>

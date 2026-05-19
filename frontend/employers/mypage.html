@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Page - Employer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-[#f2f2f2] py-4 font-sans text-black">
+  <div class="w-[700px] mx-auto bg-[#f7fbff]">
+    <nav class="h-[65px] bg-white border border-[#79c5ff] flex items-end px-4 pb-0">
+      <svg width="95" height="45" viewBox="0 0 120 55"><path d="M25 37 C35 22, 24 15, 17 22 C10 29, 16 40, 30 38 C42 36, 48 23, 58 19" fill="none" stroke="#0059d9" stroke-width="9" stroke-linecap="round"/><path d="M54 34 C72 30, 82 17, 84 5 C75 18, 62 14, 59 28 Z" fill="#18a9f5"/><circle cx="24" cy="14" r="8" fill="#0059d9"/></svg>
+      <div class="ml-auto flex">
+        <button onclick="window.location.href='applicant.html'" class="w-[108px] h-[32px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4">Applicant</button>
+        <button onclick="window.location.href='searchfrom.html'" class="w-[108px] h-[32px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4">Search</button>
+        <button onclick="window.location.href='message.html'" class="w-[108px] h-[32px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4">Message</button>
+      </div>
+    </nav>
+
+    <div class="grid grid-cols-[180px_1fr] min-h-[432px]">
+      <aside class="border-r border-[#79c5ff] p-4">
+        <div class="w-[143px] h-[108px] bg-[#d9d9d9] relative mb-10">
+          <svg class="absolute inset-0 w-full h-full stroke-gray-600 stroke-[0.8]" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><line x1="0" y1="0" x2="100%" y2="100%"/><line x1="100%" y1="0" x2="0" y2="100%"/></svg>
+        </div>
+        <button onclick="window.location.href='Companyinformation.html'" class="block w-[136px] min-h-[39px] bg-[#b2ebf2] border border-[#79c5ff] text-base font-bold mx-auto mb-6">Post New Job</button>
+        <button onclick="doLogout()" class="block w-[136px] min-h-[39px] bg-gray-200 border border-gray-400 text-base font-bold mx-auto">Logout</button>
+      </aside>
+
+      <section class="pt-14 px-6">
+        <h1 class="text-base font-bold mb-4">Welcome, <span id="company-name">...</span></h1>
+        <h2 class="text-base font-bold ml-22 mb-8">Interview Schedule</h2>
+        <div id="schedule" class="w-[375px] ml-6 border border-[#79c5ff] divide-y divide-[#79c5ff]">
+          <div class="p-4 text-xs text-gray-400">Loading...</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    async function loadPage() {
+      if (!requireLogin('employer')) return;
+
+      const profRes = await getEmployerProfile();
+      if (profRes.employer) {
+        document.getElementById('company-name').textContent = profRes.employer.company_name || 'Company';
+      }
+
+      const offersRes = await getEmployerOffers();
+      const schedule = document.getElementById('schedule');
+
+      if (!offersRes.offers || offersRes.offers.length === 0) {
+        schedule.innerHTML = '<div class="p-4 text-xs text-gray-400">No interviews scheduled yet.</div>';
+        return;
+      }
+
+      const accepted = offersRes.offers.filter(o => o.status === 'accepted');
+      if (accepted.length === 0) {
+        schedule.innerHTML = '<div class="p-4 text-xs text-gray-400">No accepted interviews yet.</div>';
+        return;
+      }
+
+      schedule.innerHTML = accepted.map(o => `
+        <div class="p-5 text-base leading-tight">
+          ${o.interview_date || 'TBD'}<br>
+          - ${o.candidate_name || 'Candidate'} (${o.interview_time || 'TBD'})
+        </div>
+      `).join('');
+    }
+
+    async function doLogout() {
+      await logout(); clearSession();
+      window.location.href = 'companylogin.html';
+    }
+
+    loadPage();
+  </script>
+</body>
+</html>

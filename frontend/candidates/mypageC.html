@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black">
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm">
+    <h1 class="text-3xl font-medium text-gray-400 mb-4">My page <span class="text-2xl">★</span></h1>
+    <header class="border border-blue-200 p-3 mb-8 flex items-center justify-between">
+      <svg width="120" height="45" viewBox="0 0 120 45" fill="none"><path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/><path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/><path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="flex -space-x-px mr-4">
+        <button onclick="window.location.href='offerpageC.html'" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Offer</button>
+        <button onclick="window.location.href='bookmarkC.html'" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Bookmark</button>
+        <button onclick="window.location.href='massageC.html'" class="nav-btn px-8 py-2 font-bold border border-gray-300 rounded-t-md text-lg bg-white">Message</button>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-12 min-h-[400px]">
+      <div class="col-span-4 border-r border-blue-200 pt-4 flex flex-col items-center pr-6 space-y-10">
+        <div class="w-24 h-24 bg-[#dddddd] flex items-center justify-center border border-gray-300">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="w-full space-y-6 px-2">
+          <button onclick="window.location.href='accountsettingC.html'" class="w-full bg-[#b2dfdb] border border-gray-400 py-3 font-bold text-[15px] hover:bg-[#99ceca] transition">Account<br>Setting</button>
+          <button onclick="window.location.href='recomendationC.html'" class="w-full bg-[#b2dfdb] border border-gray-400 py-3 font-bold text-[15px] hover:bg-[#99ceca] transition">Today's<br>Recommendation</button>
+          <button onclick="window.location.href='jobsearch2C.html'" class="w-full bg-[#b2dfdb] border border-gray-400 py-3 font-bold text-[15px] hover:bg-[#99ceca] transition">Search<br>Jobs</button>
+          <button onclick="doLogout()" class="w-full bg-gray-200 border border-gray-400 py-3 font-bold text-[15px] hover:bg-gray-300 transition">Logout</button>
+        </div>
+      </div>
+
+      <div class="col-span-8 pt-8 pl-10 pr-4">
+        <h2 class="text-xl font-bold mb-2">Welcome, <span id="user-name">...</span></h2>
+        <h3 class="text-lg font-bold mb-6 text-gray-700">Interview Schedule</h3>
+        <div id="schedule" class="border border-gray-500 bg-white divide-y divide-gray-400">
+          <div class="p-4 text-gray-400 text-sm">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadPage() {
+      if (!requireLogin('candidate')) return;
+      const user = getSession();
+      document.getElementById('user-name').textContent = user.email;
+
+      // load accepted offers = interview schedule
+      const res = await getOffers();
+      const schedule = document.getElementById('schedule');
+
+      if (!res.offers || res.offers.length === 0) {
+        schedule.innerHTML = '<div class="p-4 text-gray-400 text-sm">No interviews scheduled yet.</div>';
+        return;
+      }
+
+      const accepted = res.offers.filter(o => o.status === 'accepted');
+      if (accepted.length === 0) {
+        schedule.innerHTML = '<div class="p-4 text-gray-400 text-sm">No accepted interviews yet.</div>';
+        return;
+      }
+
+      schedule.innerHTML = accepted.map(o => `
+        <div class="p-4 text-[15px] text-black">
+          <div class="font-bold">${o.interview_date || 'TBD'}</div>
+          <div class="pl-2 mt-0.5 text-gray-900">- Interview with ${o.company_name || 'Company'} (${o.interview_time || 'TBD'})</div>
+        </div>
+      `).join('');
+    }
+
+    async function doLogout() {
+      await logout();
+      clearSession();
+      window.location.href = 'loginnC.html';
+    }
+
+    loadPage();
+  </script>
+</body>
+</html>

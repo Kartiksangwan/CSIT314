@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Page (Signin continued) Wireframe Match</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen font-sans p-6 text-black selection:bg-transparent">
+
+  <div class="max-w-[850px] mx-auto border border-gray-200 p-8 shadow-sm min-h-[600px] flex flex-col justify-between">
+    
+    <div class="w-full">
+      <h1 class="text-3xl font-medium text-gray-400 mb-4 flex items-center gap-1">
+        <span class="text-2xl"></span>
+      </h1>
+
+      <header class="border border-blue-200 p-3 mb-12 flex items-center justify-between">
+        <div class="flex items-center">
+          <svg width="120" height="45" viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 35C20 30 25 15 10 15C5 15 2 25 12 30C22 35 30 20 35 15" stroke="#1e62d0" stroke-width="4" stroke-linecap="round"/>
+            <path d="M42 32C35 25 35 12 48 15C55 17 50 30 42 32Z" fill="#50a5f5"/>
+            <path d="M38 15C43 20 52 25 58 12" stroke="#1e62d0" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </header>
+
+      <div class="max-w-[700px] mx-auto py-4">
+        <form onsubmit="handleFormSubmit(event)" class="space-y-6">
+          
+          <div class="grid grid-cols-12 gap-4 items-start">
+            <label for="work-experience" class="col-span-5 text-right font-bold text-[16px] pr-8 pt-2 text-black leading-tight">
+              Work Experience
+            </label>
+            <div class="col-span-7 flex justify-start">
+              <textarea 
+                id="work-experience"
+                rows="4"
+                class="w-[350px] border border-blue-300 bg-white p-2.5 text-[14px] font-normal text-black leading-normal resize-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >I have experience in Java, Python, and mobile app development. I worked on team projects involving UI/UX design, database integration, and application development.</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 gap-4 items-start">
+            <label for="skills" class="col-span-5 text-right font-bold text-[16px] pr-8 pt-2 text-black leading-tight">
+              Skills
+            </label>
+            <div class="col-span-7 flex justify-start">
+              <textarea 
+                id="skills"
+                rows="3"
+                class="w-[290px] border border-blue-300 bg-white p-2.5 text-[14px] font-normal text-black leading-normal resize-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >Java, SQL, Git/GitHub, Figma, Android Studio, Problem Solving, Team Collaboration, UI/UX Design</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 gap-4 items-start">
+            <label class="col-span-5 text-right font-bold text-[16px] pr-8 pt-1 text-black leading-tight">
+              Preferred Working Mode<br>
+              <span class="text-[14px] font-bold text-black">(Remote / On-site / Hybrid)</span>
+            </label>
+            <div class="col-span-7 flex justify-start">
+              <div class="w-[290px] h-[65px] border border-blue-300 bg-white px-4 flex justify-between items-center">
+                <label class="flex items-center space-x-1.5 font-bold text-[14px] cursor-pointer text-black">
+                  <input type="checkbox" id="mode-remote" checked class="w-3.5 h-3.5 border border-black accent-black rounded-none">
+                  <span>Remote</span>
+                </label>
+                <label class="flex items-center space-x-1.5 font-bold text-[14px] cursor-pointer text-black">
+                  <input type="checkbox" id="mode-onsite" class="w-3.5 h-3.5 border border-black accent-black rounded-none">
+                  <span>On-site</span>
+                </label>
+                <label class="flex items-center space-x-1.5 font-bold text-[14px] cursor-pointer text-black">
+                  <input type="checkbox" id="mode-hybrid" class="w-3.5 h-3.5 border border-black accent-black rounded-none">
+                  <span>Hybrid</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 gap-4 items-start">
+            <label for="preferred-location" class="col-span-5 text-right font-bold text-[16px] pr-8 pt-3 text-black leading-tight">
+              Preferred Location
+            </label>
+            <div class="col-span-7 flex justify-start">
+              <input 
+                type="text" 
+                id="preferred-location"
+                class="w-[290px] h-[65px] border border-blue-300 bg-white px-3 focus:outline-none focus:ring-1 focus:ring-blue-500 text-[14px] font-normal text-black"
+              >
+            </div>
+          </div>
+
+          <div class="flex justify-center pt-8">
+            <button type="submit" class="bg-[#b2dfdb] border border-gray-400 px-12 py-2 font-bold text-[16px] hover:bg-[#99ceca] active:bg-[#7bc2bc] transition tracking-wide shadow-sm">
+              Submit
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div></div>
+
+  </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      const experience = document.getElementById('work-experience').value;
+      const skills = document.getElementById('skills').value;
+      const location = document.getElementById('preferred-location').value;
+      
+      const remoteChecked = document.getElementById('mode-remote').checked;
+      const onsiteChecked = document.getElementById('mode-onsite').checked;
+      const hybridChecked = document.getElementById('mode-hybrid').checked;
+
+      // Compile selected working patterns dynamically
+      let selectedModes = [];
+      if (remoteChecked) selectedModes.push("Remote");
+      if (onsiteChecked) selectedModes.push("On-site");
+      if (hybridChecked) selectedModes.push("Hybrid");
+
+      alert(
+        "Profile Saved Successfully!\n\n" +
+        "Skills: " + skills.substring(0, 30) + "...\n" +
+        "Preferred Mode: " + (selectedModes.join(", ") || "None selected") + "\n" +
+        "Location Specified: " + (location || "None entered")
+      );
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Registration - Step 2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-[#f2f2f2] py-6 font-sans text-black">
+  <div class="w-[700px] mx-auto bg-[#f7fbff]">
+    <nav class="h-[65px] bg-white border border-[#79c5ff] flex items-end px-6">
+      <svg width="95" height="45" viewBox="0 0 120 55"><path d="M25 37 C35 22, 24 15, 17 22 C10 29, 16 40, 30 38 C42 36, 48 23, 58 19" fill="none" stroke="#0059d9" stroke-width="9" stroke-linecap="round"/><path d="M54 34 C72 30, 82 17, 84 5 C75 18, 62 14, 59 28 Z" fill="#18a9f5"/><circle cx="24" cy="14" r="8" fill="#0059d9"/></svg>
+    </nav>
+    <div class="pt-10 pb-10 px-10">
+      <h1 class="text-base font-bold mb-6">Create Employer Account — Step 2 of 2</h1>
+      <div id="err" class="text-red-600 text-xs mb-3 hidden"></div>
+
+      <form onsubmit="complete(event)" class="space-y-8">
+        <div class="grid grid-cols-[120px_210px] gap-x-5 items-center">
+          <label class="text-xs font-bold">Work mode</label>
+          <select id="work_mode" class="w-[210px] h-[28px] border border-[#8dd2ff] px-2 text-xs">
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="On-site">On-site</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-[120px_210px] gap-x-5 items-center">
+          <label class="text-xs font-bold">Job location</label>
+          <input type="text" id="location" placeholder="e.g. Brisbane QLD" class="w-[210px] h-[28px] border border-[#8dd2ff] px-2 text-xs">
+        </div>
+        <div class="grid grid-cols-[120px_210px] gap-x-5 items-center">
+          <label class="text-xs font-bold">Salary</label>
+          <input type="text" id="salary" placeholder="e.g. $65,000 - $80,000" class="w-[210px] h-[28px] border border-[#8dd2ff] px-2 text-xs">
+        </div>
+        <div class="flex justify-center mt-6">
+          <button type="submit" id="btn" class="bg-[#b2ebf2] px-8 py-2 font-bold text-sm hover:bg-[#99d9e0] transition">Complete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    async function complete(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn');
+      const err = document.getElementById('err');
+      btn.textContent = 'Creating...'; btn.disabled = true;
+
+      const step1 = JSON.parse(sessionStorage.getItem('reg_step1') || '{}');
+      if (!step1.email) {
+        err.textContent = 'Missing step 1 data. Please go back.';
+        err.classList.remove('hidden');
+        btn.textContent = 'Complete'; btn.disabled = false;
+        return;
+      }
+
+      // 1. register user
+      const regRes = await register(step1.email, step1.password, 'employer');
+      if (regRes.error) {
+        err.textContent = regRes.error; err.classList.remove('hidden');
+        btn.textContent = 'Complete'; btn.disabled = false;
+        return;
+      }
+      saveSession(regRes.user);
+
+      // 2. update employer profile
+      await updateEmployerProfile({ company_name: step1.company_name, company_info: step1.company_info });
+
+      // 3. create the job posting
+      await createJob({
+        job_title: step1.job_title,
+        job_description: step1.job_description,
+        required_skills: step1.required_skills,
+        required_education: step1.required_education,
+        experience_years: step1.experience_years,
+        work_mode: document.getElementById('work_mode').value,
+        location: document.getElementById('location').value,
+        salary: document.getElementById('salary').value
+      });
+
+      sessionStorage.removeItem('reg_step1');
+      window.location.href = 'mypage.html';
+    }
+  </script>
+</body>
+</html>
