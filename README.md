@@ -193,7 +193,7 @@ All passwords are `password123`
 ## Frontend
 
 Open any HTML file in the `frontend/` folder directly in your browser.
-The frontend pages are static and are not yet wired to the backend API — 
+The frontend pages are static and are not yet wired to the backend API 
 to connect them, update the JavaScript in each page to call `http://localhost:5000/api/...`
 
 ---
