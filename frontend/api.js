@@ -1,9 +1,3 @@
-// ============================================================
-// api.js — shared helper for all frontend pages
-// All API calls go through here so we only need to change
-// the BASE_URL in one place if the server moves.
-// ============================================================
-
 const BASE_URL = 'http://127.0.0.1:5000/api';
 
 // ---- low-level fetch helpers ----
