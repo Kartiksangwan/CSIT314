@@ -1,6 +1,5 @@
 -- ============================================================
 -- Talent Matching Platform - Database Schema
--- Run this in MySQL before starting the backend
 -- ============================================================
 
 CREATE DATABASE IF NOT EXISTS talent_matching;
