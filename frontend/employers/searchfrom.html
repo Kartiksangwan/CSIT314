@@ -16,11 +16,25 @@
       <button onclick="window.location.href='message.html'" class="w-[100px] h-[32px] border border-[#7cc9ff] bg-white rounded-t ml-4">Message</button>
     </nav>
 
-    <div class="p-10">
-      <div class="flex items-center gap-3 mb-6">
-        <input type="text" id="kw" placeholder="Search by skill or keyword..."
-          class="w-[200px] h-[30px] bg-[#b2ebf2] border-none px-3 text-sm font-bold placeholder-gray-700 focus:outline-none">
-        <button onclick="doSearch()" class="px-4 py-1 bg-[#b2ebf2] font-bold text-sm border border-gray-400 hover:bg-[#99d9e0]">🔍 Search</button>
+    <div class="p-8">
+      <!-- Keyword + location + work mode -->
+      <div class="flex flex-wrap gap-2 mb-3">
+        <input type="text" id="kw" placeholder="Skill or keyword e.g. Python"
+          class="flex-1 min-w-[160px] h-[32px] bg-[#b2ebf2] border-none px-3 text-sm font-bold placeholder-gray-700 focus:outline-none">
+        <input type="text" id="loc" placeholder="Location e.g. Brisbane"
+          class="w-[160px] h-[32px] bg-[#b2ebf2] border-none px-3 text-sm font-bold placeholder-gray-700 focus:outline-none">
+        <select id="wm" class="w-[130px] h-[32px] bg-[#b2ebf2] border-none px-2 text-sm font-bold focus:outline-none">
+          <option value="">Work Mode</option>
+          <option value="Remote">Remote</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="On-site">On-site</option>
+        </select>
+        <button onclick="doSearch()" class="px-4 h-[32px] bg-[#b2ebf2] font-bold text-sm border border-gray-400 hover:bg-[#99d9e0]">🔍 Search</button>
+      </div>
+
+      <!-- Clear -->
+      <div class="mb-6">
+        <button onclick="clearFilters()" class="text-xs text-gray-400 hover:text-red-500 underline">Clear filters</button>
       </div>
 
       <div id="result-list" class="space-y-6">
@@ -45,30 +59,47 @@
   <script>
     let currentReceiverUserId = null;
 
+    function clearFilters() {
+      document.getElementById('kw').value = '';
+      document.getElementById('loc').value = '';
+      document.getElementById('wm').value = '';
+      document.getElementById('result-list').innerHTML = '<div class="text-gray-400 text-sm text-center py-6">Search cleared.</div>';
+    }
+
     async function doSearch() {
       if (!requireLogin('employer')) return;
-      const kw = document.getElementById('kw').value;
+      const kw  = document.getElementById('kw').value;
+      const loc = document.getElementById('loc').value;
+      const wm  = document.getElementById('wm').value;
       const list = document.getElementById('result-list');
       list.innerHTML = '<div class="text-gray-400 text-sm text-center py-6">Searching...</div>';
 
-      const res = await searchCandidates(kw);
+      // build URL manually to pass location + work_mode
+      let url = '/search/candidates?';
+      if (kw)  url += 'keyword=' + encodeURIComponent(kw) + '&';
+      if (loc) url += 'location=' + encodeURIComponent(loc) + '&';
+      if (wm)  url += 'work_mode=' + encodeURIComponent(wm);
+
+      const res = await apiGet(url);
+
       if (!res.candidates || res.candidates.length === 0) {
-        list.innerHTML = '<div class="text-gray-400 text-sm text-center py-6">No candidates found.</div>';
+        list.innerHTML = '<div class="text-gray-400 text-sm text-center py-6">No candidates found. Try different keywords or broaden your filters.</div>';
         return;
       }
 
       list.innerHTML = res.candidates.map(c => `
         <div class="border border-[#79c5ff] bg-white p-4 flex justify-between items-start">
-          <div class="text-sm leading-relaxed">
+          <div class="text-sm leading-relaxed flex-1 pr-4">
             <div class="font-bold text-base">${c.full_name || 'Unknown'}</div>
             <div class="text-gray-700">${c.job_title || ''}</div>
             <div class="text-gray-600 text-xs mt-1">Skills: ${c.skills || ''}</div>
             <div class="text-gray-600 text-xs">📍 ${c.location || ''} &nbsp; 💼 ${c.work_mode || ''}</div>
             <div class="text-gray-600 text-xs">🎓 ${c.education || ''} &nbsp; ⏱ ${c.experience_years || ''}</div>
             ${c.match_score ? `<div class="text-blue-600 font-bold text-xs mt-1">Match: ${c.match_score}%</div>` : ''}
+            ${c.matched_keywords && c.matched_keywords.length ? `<div class="text-xs text-gray-400">${c.matched_keywords.map(k => '#'+k).join(' ')}</div>` : ''}
           </div>
           <button onclick="openModal(${c.user_id}, '${c.full_name || 'Candidate'}')"
-            class="ml-4 flex-shrink-0 text-xs bg-[#b2ebf2] border border-gray-400 px-3 py-1.5 font-bold rounded hover:bg-[#99d9e0]">
+            class="flex-shrink-0 text-xs bg-[#b2ebf2] border border-gray-400 px-3 py-1.5 font-bold rounded hover:bg-[#99d9e0]">
             💬 Message
           </button>
         </div>
@@ -97,9 +128,8 @@
       window.location.href = 'message.html';
     }
 
-    document.getElementById('kw').addEventListener('keypress', e => {
-      if (e.key === 'Enter') doSearch();
-    });
+    document.getElementById('kw').addEventListener('keypress', e => { if (e.key === 'Enter') doSearch(); });
+    document.getElementById('loc').addEventListener('keypress', e => { if (e.key === 'Enter') doSearch(); });
   </script>
 </body>
 </html>
