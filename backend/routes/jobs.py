@@ -12,22 +12,36 @@ def get_all_jobs():
     result = []
     for job in jobs:
         job_data = job.to_dict()
-        # include employer info too
-        employer = Employer.query.get(job.employer_id)
+        employer = db.session.get(Employer, job.employer_id)
         if employer:
             job_data['company_name'] = employer.company_name
         result.append(job_data)
     return jsonify({'jobs': result}), 200
 
 
+# FIX: /my-jobs MUST be declared before /<int:job_id> or Flask treats "my-jobs" as an integer
+@jobs_bp.route('/my-jobs', methods=['GET'])
+def get_my_jobs():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'Not logged in'}), 401
+
+    employer = Employer.query.filter_by(user_id=user_id).first()
+    if not employer:
+        return jsonify({'error': 'Employer not found'}), 404
+
+    jobs = Job.query.filter_by(employer_id=employer.id).all()
+    return jsonify({'jobs': [j.to_dict() for j in jobs]}), 200
+
+
 @jobs_bp.route('/<int:job_id>', methods=['GET'])
 def get_job(job_id):
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job:
         return jsonify({'error': 'Job not found'}), 404
 
     job_data = job.to_dict()
-    employer = Employer.query.get(job.employer_id)
+    employer = db.session.get(Employer, job.employer_id)
     if employer:
         job_data['company_name'] = employer.company_name
         job_data['company_info'] = employer.company_info
@@ -78,7 +92,7 @@ def update_job(job_id):
     if not employer:
         return jsonify({'error': 'Only employers can update jobs'}), 403
 
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job:
         return jsonify({'error': 'Job not found'}), 404
 
@@ -121,14 +135,13 @@ def delete_job(job_id):
     if not employer:
         return jsonify({'error': 'Only employers can delete jobs'}), 403
 
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job:
         return jsonify({'error': 'Job not found'}), 404
 
     if job.employer_id != employer.id:
         return jsonify({'error': 'You can only delete your own jobs'}), 403
 
-    # just deactivate instead of deleting to keep history
     job.is_active = False
     db.session.commit()
 
@@ -145,16 +158,14 @@ def apply_to_job(job_id):
     if not candidate:
         return jsonify({'error': 'Only candidates can apply to jobs'}), 403
 
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job or not job.is_active:
         return jsonify({'error': 'Job not found or no longer active'}), 404
 
-    # check if already applied
     existing = Application.query.filter_by(candidate_id=candidate.id, job_id=job_id).first()
     if existing:
         return jsonify({'error': 'You have already applied to this job'}), 400
 
-    # calculate match score
     score, matched = calculate_match(candidate, job)
 
     application = Application(
@@ -186,17 +197,3 @@ def calculate_match(candidate, job):
     matched_str = ', '.join(matched)
 
     return score, matched_str
-
-
-@jobs_bp.route('/my-jobs', methods=['GET'])
-def get_my_jobs():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({'error': 'Not logged in'}), 401
-
-    employer = Employer.query.filter_by(user_id=user_id).first()
-    if not employer:
-        return jsonify({'error': 'Employer not found'}), 404
-
-    jobs = Job.query.filter_by(employer_id=employer.id).all()
-    return jsonify({'jobs': [j.to_dict() for j in jobs]}), 200

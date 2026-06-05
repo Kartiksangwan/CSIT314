@@ -20,10 +20,10 @@ def get_bookmarks():
 
     result = []
     for b in bookmarks:
-        job = Job.query.get(b.job_id)
+        job = db.session.get(Job, b.job_id)
         if job:
             job_data = job.to_dict()
-            employer = Employer.query.get(job.employer_id)
+            employer = db.session.get(Employer, job.employer_id)
             if employer:
                 job_data['company_name'] = employer.company_name
             result.append({
@@ -51,7 +51,7 @@ def add_bookmark():
     if not job_id:
         return jsonify({'error': 'job_id is required'}), 400
 
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job:
         return jsonify({'error': 'Job not found'}), 404
 

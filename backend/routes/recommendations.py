@@ -4,13 +4,10 @@ from database import db
 
 recommendations_bp = Blueprint('recommendations', __name__)
 
+FREE_LIMIT = 10   # max recommendations for non-members
+
 
 def compute_score(candidate, job):
-    """
-    Simple Top-K style matching algorithm.
-    Compares candidate skills vs job required skills.
-    Returns score 0-100 and list of matched keywords.
-    """
     score = 0
     matched = []
 
@@ -20,7 +17,6 @@ def compute_score(candidate, job):
     candidate_skills = [s.strip().lower() for s in candidate.skills.split(',')]
     job_skills = [s.strip().lower() for s in job.required_skills.split(',')]
 
-    # skill match - most important (up to 60 points)
     for skill in job_skills:
         if skill in candidate_skills:
             matched.append(skill)
@@ -29,27 +25,21 @@ def compute_score(candidate, job):
         skill_score = (len(matched) / len(job_skills)) * 60
         score += skill_score
 
-    # location match (up to 20 points)
     if candidate.location and job.location:
         if candidate.location.lower() in job.location.lower() or job.location.lower() in candidate.location.lower():
             score += 20
 
-    # work mode match (up to 20 points)
     if candidate.work_mode and job.work_mode:
         if candidate.work_mode.lower() == job.work_mode.lower():
             score += 20
         elif 'remote' in candidate.work_mode.lower() or 'remote' in job.work_mode.lower():
-            score += 10  # partial credit for remote flexibility
+            score += 10
 
     return round(score, 1), matched
 
 
 @recommendations_bp.route('/today', methods=['GET'])
 def get_todays_recommendations():
-    """
-    Returns Top-N job recommendations for the logged in candidate.
-    Scores all active jobs and returns the best matches.
-    """
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'error': 'Not logged in'}), 401
@@ -58,35 +48,44 @@ def get_todays_recommendations():
     if not candidate:
         return jsonify({'error': 'Candidate profile not found'}), 404
 
-    # how many to return - default 10 (Top-N)
-    n = request.args.get('n', 10, type=int)
+    # MEMBERSHIP: premium/basic = unlimited, free = top 10
+    is_member = candidate.subscription in ('basic', 'premium')
+    n = request.args.get('n', None, type=int)
 
     jobs = Job.query.filter_by(is_active=True).all()
-
     scored_jobs = []
+
     for job in jobs:
         score, matched = compute_score(candidate, job)
         if score > 0:
             job_data = job.to_dict()
-            employer = Employer.query.get(job.employer_id)
+            employer = db.session.get(Employer, job.employer_id)
             if employer:
                 job_data['company_name'] = employer.company_name
             job_data['match_score'] = score
             job_data['matched_keywords'] = matched
             scored_jobs.append(job_data)
 
-    # sort descending by score and return top N
     scored_jobs.sort(key=lambda x: x['match_score'], reverse=True)
-    top_n = scored_jobs[:n]
 
-    return jsonify({'recommendations': top_n, 'total_found': len(scored_jobs)}), 200
+    if n:
+        top_n = scored_jobs[:n]
+    elif is_member:
+        top_n = scored_jobs          # unlimited for members
+    else:
+        top_n = scored_jobs[:FREE_LIMIT]   # cap at 10 for free
+
+    return jsonify({
+        'recommendations': top_n,
+        'total_found': len(scored_jobs),
+        'is_member': is_member,
+        'subscription': candidate.subscription,
+        'limit_applied': not is_member and len(scored_jobs) > FREE_LIMIT
+    }), 200
 
 
 @recommendations_bp.route('/top-candidates/<int:job_id>', methods=['GET'])
 def get_top_candidates(job_id):
-    """
-    Returns Top-K candidates for a given job. For employers.
-    """
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'error': 'Not logged in'}), 401
@@ -95,11 +94,13 @@ def get_top_candidates(job_id):
     if not employer:
         return jsonify({'error': 'Only employers can use this'}), 403
 
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job:
         return jsonify({'error': 'Job not found'}), 404
 
-    k = request.args.get('k', 10, type=int)
+    # MEMBERSHIP: check employer subscription
+    is_member = employer.subscription in ('basic', 'premium')
+    k = request.args.get('k', None, type=int)
 
     candidates = Candidate.query.all()
     scored = []
@@ -115,17 +116,23 @@ def get_top_candidates(job_id):
             scored.append(c_data)
 
     scored.sort(key=lambda x: x['match_score'], reverse=True)
-    top_k = scored[:k]
 
-    return jsonify({'top_candidates': top_k, 'total_found': len(scored)}), 200
+    if k:
+        top_k = scored[:k]
+    elif is_member:
+        top_k = scored
+    else:
+        top_k = scored[:FREE_LIMIT]
+
+    return jsonify({
+        'top_candidates': top_k,
+        'total_found': len(scored),
+        'is_member': is_member
+    }), 200
 
 
 @recommendations_bp.route('/generate', methods=['POST'])
 def generate_recommendations():
-    """
-    Pre-computes and stores recommendations for the current candidate.
-    Can be run once to populate the recommendations table.
-    """
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'error': 'Not logged in'}), 401
@@ -134,9 +141,7 @@ def generate_recommendations():
     if not candidate:
         return jsonify({'error': 'Candidate profile not found'}), 404
 
-    # delete old recommendations for this candidate
     Recommendation.query.filter_by(candidate_id=candidate.id).delete()
-
     jobs = Job.query.filter_by(is_active=True).all()
     new_recs = []
 
@@ -153,5 +158,4 @@ def generate_recommendations():
             new_recs.append({'job_id': job.id, 'score': score})
 
     db.session.commit()
-
     return jsonify({'message': f'Generated {len(new_recs)} recommendations', 'recommendations': new_recs}), 200

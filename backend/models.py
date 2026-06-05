@@ -76,6 +76,7 @@ class Employer(db.Model):
     company_name = db.Column(db.String(100))
     company_info = db.Column(db.Text)
     logo_filename = db.Column(db.String(200))
+    subscription = db.Column(db.Enum('free', 'basic', 'premium'), default='free')
 
     jobs = db.relationship('Job', backref='employer', lazy=True)
 
@@ -85,7 +86,8 @@ class Employer(db.Model):
             'user_id': self.user_id,
             'company_name': self.company_name,
             'company_info': self.company_info,
-            'logo_filename': self.logo_filename
+            'logo_filename': self.logo_filename,
+            'subscription': self.subscription
         }
 
 
@@ -175,6 +177,8 @@ class Message(db.Model):
     sent_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_read = db.Column(db.Boolean, default=False)
 
+    # FIX: define both sender and receiver relationships explicitly to avoid ambiguity
+    sender = db.relationship('User', foreign_keys=[sender_user_id], backref='sent_messages')
     receiver = db.relationship('User', foreign_keys=[receiver_user_id], backref='received_messages')
 
     def to_dict(self):

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Membership - Employer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../api.js"></script>
+</head>
+<body class="bg-[#f2f2f2] py-4 font-sans text-black">
+  <div class="w-[700px] mx-auto bg-[#f7fbff]">
+    <nav class="h-[65px] bg-white border border-[#79c5ff] flex items-end px-4 pb-0">
+      <svg width="95" height="45" viewBox="0 0 120 55"><path d="M25 37 C35 22, 24 15, 17 22 C10 29, 16 40, 30 38 C42 36, 48 23, 58 19" fill="none" stroke="#0059d9" stroke-width="9" stroke-linecap="round"/><path d="M54 34 C72 30, 82 17, 84 5 C75 18, 62 14, 59 28 Z" fill="#18a9f5"/><circle cx="24" cy="14" r="8" fill="#0059d9"/></svg>
+      <div class="ml-auto flex">
+        <button onclick="window.location.href='applicant.html'" class="w-[108px] h-[32px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4">Applicant</button>
+        <button onclick="window.location.href='searchfrom.html'" class="w-[108px] h-[32px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4">Search</button>
+        <button onclick="window.location.href='message.html'" class="w-[108px] h-[32px] bg-white border border-[#79c5ff] border-b-0 rounded-t text-base ml-4">Message</button>
+      </div>
+    </nav>
+
+    <div class="px-10 py-8">
+      <h1 class="text-base font-bold mb-2">Membership Plans</h1>
+      <div id="current-plan" class="text-xs text-gray-500 mb-6"></div>
+      <div id="msg" class="text-green-600 font-semibold text-sm mb-4 hidden"></div>
+
+      <div class="grid grid-cols-2 gap-6">
+
+        <!-- Free -->
+        <div class="border border-[#79c5ff] bg-white p-6 flex flex-col items-center text-center space-y-4">
+          <h2 class="font-bold text-base">Free Plan</h2>
+          <div class="font-bold text-lg">$0</div>
+          <button onclick="selectPlan('free')" id="btn-free" class="w-full bg-[#b2ebf2] border border-gray-400 py-2 font-bold text-sm hover:bg-[#99d9e0]">Select</button>
+          <ul class="text-left text-sm space-y-2 w-full">
+            <li>✔ Post job listings</li>
+            <li>✔ View applicants</li>
+            <li>✔ Search candidates</li>
+            <li class="text-gray-400">✘ Top 10 candidate recommendations only</li>
+          </ul>
+        </div>
+
+        <!-- Premium -->
+        <div class="border border-[#79c5ff] bg-white p-6 flex flex-col items-center text-center space-y-4">
+          <h2 class="font-bold text-base">Premium Plan</h2>
+          <div class="font-bold text-lg">$50<span class="text-sm font-normal">/month</span></div>
+          <button onclick="selectPlan('premium')" id="btn-premium" class="w-full bg-[#b2ebf2] border border-gray-400 py-2 font-bold text-sm hover:bg-[#99d9e0]">Select Premium</button>
+          <ul class="text-left text-sm space-y-2 w-full">
+            <li>✔ Post job listings</li>
+            <li>✔ View applicants</li>
+            <li>✔ Search candidates</li>
+            <li>✔ <span class="text-blue-700 font-bold">Unlimited candidate recommendations</span></li>
+            <li>✔ Priority listing visibility</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-6 text-center">
+        <button onclick="window.location.href='mypage.html'" class="text-sm text-blue-600 font-bold hover:underline">← Back to My Page</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSub = 'free';
+
+    async function loadCurrentPlan() {
+      if (!requireLogin('employer')) return;
+      const res = await getEmployerProfile();
+      if (res.employer) {
+        currentSub = res.employer.subscription || 'free';
+        document.getElementById('current-plan').textContent = `Current plan: ${currentSub.charAt(0).toUpperCase() + currentSub.slice(1)}`;
+        const activeBtn = document.getElementById('btn-' + currentSub);
+        if (activeBtn) { activeBtn.textContent = '✓ Current Plan'; activeBtn.classList.add('bg-green-200'); }
+      }
+    }
+
+    async function selectPlan(plan) {
+      if (plan === currentSub) { alert('You are already on this plan.'); return; }
+      const res = await updateEmployerSubscription(plan);
+      const msg = document.getElementById('msg');
+      if (res.error) { msg.textContent = res.error; msg.classList.remove('hidden'); }
+      else {
+        msg.textContent = `Successfully switched to ${plan} plan!`;
+        msg.classList.remove('hidden');
+        currentSub = plan;
+        ['free','basic','premium'].forEach(p => {
+          const b = document.getElementById('btn-' + p);
+          if (b) { b.classList.remove('bg-green-200'); b.textContent = p === 'premium' ? 'Select Premium' : 'Select'; }
+        });
+        const activeBtn = document.getElementById('btn-' + plan);
+        if (activeBtn) { activeBtn.textContent = '✓ Current Plan'; activeBtn.classList.add('bg-green-200'); }
+        document.getElementById('current-plan').textContent = `Current plan: ${plan.charAt(0).toUpperCase() + plan.slice(1)}`;
+        setTimeout(() => msg.classList.add('hidden'), 3000);
+      }
+    }
+
+    loadCurrentPlan();
+  </script>
+</body>
+</html>

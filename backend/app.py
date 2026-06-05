@@ -15,10 +15,16 @@ app = Flask(__name__)
 
 # Config
 app.config['SECRET_KEY'] = 'dev-secret-key-change-in-production'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/talent_matching'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/talent_matching'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-CORS(app, supports_credentials=True)
+# FIX: Session cookie settings so cookies work with cross-origin requests (frontend <-> backend)
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = False   # set True in production (HTTPS)
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+
+CORS(app, supports_credentials=True, origins=['http://127.0.0.1:5500', 'http://localhost:5500',
+                                               'http://127.0.0.1:5000', 'null'])
 
 db.init_app(app)
 
@@ -39,5 +45,5 @@ def index():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        db.create_all()   # FIX: must be inside app_context()
     app.run(debug=True, port=5000)

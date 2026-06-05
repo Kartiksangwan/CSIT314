@@ -21,8 +21,8 @@ def get_offers():
     result = []
     for offer in offers:
         offer_data = offer.to_dict()
-        job = Job.query.get(offer.job_id)
-        employer = Employer.query.get(offer.employer_id)
+        job = db.session.get(Job, offer.job_id)
+        employer = db.session.get(Employer, offer.employer_id)
         offer_data['job_title'] = job.job_title if job else ''
         offer_data['company_name'] = employer.company_name if employer else ''
         result.append(offer_data)
@@ -51,11 +51,11 @@ def send_offer():
     if not candidate_id or not job_id:
         return jsonify({'error': 'candidate_id and job_id are required'}), 400
 
-    candidate = Candidate.query.get(candidate_id)
+    candidate = db.session.get(Candidate, candidate_id)
     if not candidate:
         return jsonify({'error': 'Candidate not found'}), 404
 
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job:
         return jsonify({'error': 'Job not found'}), 404
 
@@ -84,7 +84,7 @@ def respond_to_offer(offer_id):
     if not candidate:
         return jsonify({'error': 'Candidate profile not found'}), 404
 
-    offer = Offer.query.get(offer_id)
+    offer = db.session.get(Offer, offer_id)
     if not offer:
         return jsonify({'error': 'Offer not found'}), 404
 
@@ -119,8 +119,8 @@ def get_employer_offers():
     result = []
     for offer in offers:
         offer_data = offer.to_dict()
-        candidate = Candidate.query.get(offer.candidate_id)
-        job = Job.query.get(offer.job_id)
+        candidate = db.session.get(Candidate, offer.candidate_id)
+        job = db.session.get(Job, offer.job_id)
         offer_data['candidate_name'] = candidate.full_name if candidate else ''
         offer_data['job_title'] = job.job_title if job else ''
         result.append(offer_data)

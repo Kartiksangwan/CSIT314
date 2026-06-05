@@ -19,18 +19,15 @@ def register():
     if role not in ['candidate', 'employer']:
         return jsonify({'error': 'Role must be candidate or employer'}), 400
 
-    # check if email already exists
     existing = User.query.filter_by(email=email).first()
     if existing:
         return jsonify({'error': 'Email already registered'}), 400
 
-    # create the user
     new_user = User(email=email, role=role)
     new_user.set_password(password)
     db.session.add(new_user)
     db.session.flush()  # get the user id before commit
 
-    # create the matching profile
     if role == 'candidate':
         profile = Candidate(user_id=new_user.id)
         db.session.add(profile)
@@ -79,7 +76,8 @@ def get_current_user():
     if not user_id:
         return jsonify({'error': 'Not logged in'}), 401
 
-    user = User.query.get(user_id)
+    # FIX: use db.session.get() instead of deprecated User.query.get()
+    user = db.session.get(User, user_id)
     if not user:
         return jsonify({'error': 'User not found'}), 404
 

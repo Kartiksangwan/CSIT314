@@ -110,7 +110,7 @@ def search_jobs():
 
         if score > 0 or not keyword:
             job_data = job.to_dict()
-            employer = Employer.query.get(job.employer_id)
+            employer = db.session.get(Employer, job.employer_id)
             if employer:
                 job_data['company_name'] = employer.company_name
             job_data['match_score'] = min(score, 100)
@@ -133,7 +133,7 @@ def get_keywords_from_job():
     if not job_id:
         return jsonify({'error': 'job_id is required'}), 400
 
-    job = Job.query.get(job_id)
+    job = db.session.get(Job, job_id)
     if not job:
         return jsonify({'error': 'Job not found'}), 404
 

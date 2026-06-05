@@ -31,7 +31,7 @@ def get_messages():
 
     result = []
     for partner_id, msgs in conversations.items():
-        partner = User.query.get(partner_id)
+        partner = db.session.get(User, partner_id)
         result.append({
             'partner_id': partner_id,
             'partner_email': partner.email if partner else '',
@@ -77,7 +77,7 @@ def send_message():
         return jsonify({'error': 'receiver_user_id and content are required'}), 400
 
     # check receiver exists
-    receiver = User.query.get(receiver_id)
+    receiver = db.session.get(User, receiver_id)
     if not receiver:
         return jsonify({'error': 'Receiver not found'}), 404
 

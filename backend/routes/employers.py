@@ -96,7 +96,7 @@ def get_applicants():
 
     result = []
     for app in applications:
-        candidate = Candidate.query.get(app.candidate_id)
+        candidate = db.session.get(Candidate, app.candidate_id)
         result.append({
             'application': app.to_dict(),
             'candidate': candidate.to_dict() if candidate else None
@@ -108,8 +108,30 @@ def get_applicants():
 @employers_bp.route('/<int:employer_id>', methods=['GET'])
 def get_employer_by_id(employer_id):
     # candidates can view an employer's profile
-    employer = Employer.query.get(employer_id)
+    employer = db.session.get(Employer, employer_id)
     if not employer:
         return jsonify({'error': 'Employer not found'}), 404
 
     return jsonify({'employer': employer.to_dict()}), 200
+
+
+@employers_bp.route('/subscription', methods=['PUT'])
+def update_subscription():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'Not logged in'}), 401
+
+    employer = Employer.query.filter_by(user_id=user_id).first()
+    if not employer:
+        return jsonify({'error': 'Employer profile not found'}), 404
+
+    data = request.get_json()
+    plan = data.get('plan')
+
+    if plan not in ['free', 'basic', 'premium']:
+        return jsonify({'error': 'Invalid plan. Must be free, basic, or premium'}), 400
+
+    employer.subscription = plan
+    db.session.commit()
+
+    return jsonify({'message': f'Subscription updated to {plan}', 'employer': employer.to_dict()}), 200

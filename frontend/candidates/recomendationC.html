@@ -26,9 +26,24 @@
   </div>
 
   <script>
+    // FIX: matched_keywords may be an array (from /recommendations/today) or a string
+    function renderKeywords(kw) {
+      if (!kw) return '';
+      if (Array.isArray(kw)) return kw.map(k => '#' + k).join(' ');
+      return kw.split(',').map(k => '#' + k.trim()).join(' ');
+    }
+
     async function loadRecs() {
       if (!requireLogin('candidate')) return;
       const res = await getTodaysRecommendations();
+
+      // show membership banner if limit was applied
+      if (res.limit_applied) {
+        const banner = document.createElement('div');
+        banner.className = 'mb-6 p-3 bg-yellow-50 border border-yellow-300 rounded text-sm text-center';
+        banner.innerHTML = `Showing top 10 of ${res.total_found} matches. <a href="subcriptionC.html" class="text-blue-600 font-bold underline">Upgrade to Premium</a> for unlimited recommendations.`;
+        document.getElementById('rec-list').before(banner);
+      }
       const list = document.getElementById('rec-list');
 
       if (!res.recommendations || res.recommendations.length === 0) {
@@ -41,9 +56,7 @@
           <div class="col-span-1 text-2xl font-bold text-center">${i + 1}</div>
           <div class="col-span-3 text-center font-bold text-sm leading-tight">
             <div class="text-blue-700">Match: ${job.match_score}%</div>
-            <div class="font-normal text-gray-700 mt-1 text-xs">
-              ${job.matched_keywords ? job.matched_keywords.map(k => '#' + k).join(' ') : ''}
-            </div>
+            <div class="font-normal text-gray-700 mt-1 text-xs">${renderKeywords(job.matched_keywords)}</div>
           </div>
           <div class="col-span-6">
             <div class="border border-blue-300 p-3 bg-white min-h-[90px]">

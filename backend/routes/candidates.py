@@ -155,7 +155,7 @@ def update_subscription():
 @candidates_bp.route('/<int:candidate_id>', methods=['GET'])
 def get_candidate_by_id(candidate_id):
     # employers can look up a candidate's info
-    candidate = Candidate.query.get(candidate_id)
+    candidate = db.session.get(Candidate, candidate_id)
     if not candidate:
         return jsonify({'error': 'Candidate not found'}), 404
 

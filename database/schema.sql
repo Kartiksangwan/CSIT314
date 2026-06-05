@@ -1,5 +1,6 @@
 -- ============================================================
 -- Talent Matching Platform - Database Schema
+-- Run this in MySQL before starting the backend
 -- ============================================================
 
 CREATE DATABASE IF NOT EXISTS talent_matching;
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS employer (
     company_name VARCHAR(100),
     company_info TEXT,
     logo_filename VARCHAR(200),
+    subscription ENUM('free', 'basic', 'premium') DEFAULT 'free',
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
