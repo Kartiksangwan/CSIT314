@@ -113,11 +113,13 @@ async function getMyJobs() {
 
 // ---- search ----
 
-async function searchJobs(keyword, location, workMode) {
+async function searchJobs(keyword, location, workMode, salaryMin, salaryMax) {
   let url = '/search/jobs?';
   if (keyword) url += 'keyword=' + encodeURIComponent(keyword) + '&';
   if (location) url += 'location=' + encodeURIComponent(location) + '&';
-  if (workMode) url += 'work_mode=' + encodeURIComponent(workMode);
+  if (workMode) url += 'work_mode=' + encodeURIComponent(workMode) + '&';
+  if (salaryMin) url += 'salary_min=' + salaryMin + '&';
+  if (salaryMax) url += 'salary_max=' + salaryMax;
   return apiGet(url);
 }
 
